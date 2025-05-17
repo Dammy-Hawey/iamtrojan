@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,13 +10,17 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
 app.post('/register', (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, message } = req.body;
+
+  const hashedPassword = bcrypt.hashSync(password, 10);
 
   const userData = {
     name,
     email,
-    password,
+    password: hashedPassword,
+    message,
     createdAt: new Date()
   };
 
@@ -23,9 +28,5 @@ app.post('/register', (req, res) => {
   const filePath = path.join(__dirname, 'users', fileName);
   fs.writeFileSync(filePath, JSON.stringify(userData, null, 2));
 
-  res.send('<h2 style="color:#00f0ff;">Account created successfully!</h2><a href="/">Go Back</a>');
-});
-
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  res.send('<h2 style="color:#00f0ff;">Thanks for registering with sincerity!</h2><a href="/">Go Back</a>');
 });
