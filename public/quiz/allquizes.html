@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>iam÷TroJan Cyber Quiz</title>
+  <link rel="stylesheet" href="../../assets/css/iamtrojan.css" />
+  <script src="questions.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body { 
+        background: #0d1117; 
+        color: #fff; 
+        font-family: Arial; 
+        padding: 20px; 
+    }
+    h2 { 
+        color: #00f0ff; 
+        text-align: center; 
+    }
+    .quiz-container {
+      max-width: 900px; 
+      margin: auto; 
+      padding: 20px;
+      background: #1a1f2b; 
+      border-radius: 10px; 
+      box-shadow: 0 0 10px #00f0ff;
+    }
+    .question { margin-bottom: 25px; }
+    .question p { font-weight: bold; }
+    button {
+      background-color: #00f0ff; 
+      color: #000; 
+      font-weight: bold;
+      padding: 10px 20px; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer;
+    }
+    #result, #certificate { text-align: center; margin-top: 30px; }
+    #certificate {
+      background: #fff; 
+      color: #000;
+      padding: 30px; 
+      border: 4px double #00f0ff; 
+      border-radius: 10px;
+      display: none; 
+      max-width: 700px; 
+      margin: 40px auto;
+      box-shadow: 0 0 20px #00f0ff;
+    }
+    #certificate h2 { color: #00f0ff; }
+    #certificate img { max-height: 80px; margin-bottom: 20px; }
+    .tagline2q{
+        color: #fff;
+        font-weight: bold;
+    }
+  </style>
+
+</head>
+
+<body>
+
+    <header style="text-align: center; padding: 20px;">
+      <h1 class="glitch">
+        <a href="iamtrojan.html" style="text-decoration: none;"><img src="../../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo"></a>
+      </h1>
+      <p class="tagline2q">Empowering You with Cybersecurity Awareness</p>
+    </header>
+
+  <h2>iam÷TroJan Cybersecurity Awareness Quiz</h2>
+
+  <div class="quiz-container">
+    <form id="quizForm"></form>
+    <div id="result"></div>
+  </div>
+
+  <!-- 🎓 Certificate Preview -->
+  <div id="certificate">
+    <img src="assets/images/Trojanlogo.png" alt="Trojan Logo" />
+    <h2>Certificate of Completion</h2>
+    <p>This is to certify that</p>
+    <h3 id="certName">Cyber Warrior</h3>
+    <p>has successfully passed the</p>
+    <strong id="certLevel">Beginner</strong> Cybersecurity Quiz<br/>
+    <p>Date: <span id="certDate"></span></p>
+    <p>Certificate ID: <strong id="certID"></strong></p>
+    <button onclick="downloadCertificate()">Download as PNG</button>
+  </div>
+
+<script>
+
+  window.onload = function () {
+    const form = document.getElementById("quizForm");
+    const result = document.getElementById("result");
+    const certDiv = document.getElementById("certificate");
+
+    const certName = document.getElementById("certName");
+    const certDate = document.getElementById("certDate");
+    const certLevel = document.getElementById("certLevel");
+    const certID = document.getElementById("certID");
+
+    // 🌐 Get level from URL (e.g. quiz.html?level=intermediate)
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedLevel = urlParams.get("level") || "beginner";
+
+    // ✅ Grab questions directly by level
+    const questions = allCyberQuestions[selectedLevel] || [];
+
+    // 🎓 Update the certificate level text
+    certLevel.textContent = selectedLevel.charAt(0).toUpperCase() + selectedLevel.slice(1);
+
+    // 🧠 Render questions dynamically
+    questions.forEach((q, i) => {
+      const div = document.createElement("div");
+      div.className = "question";
+      div.innerHTML = `<p>${q.q}</p>` + q.options.map(opt =>
+        `<label><input type="radio" name="q${i}" value="${opt}" required> ${opt}</label><br>`
+      ).join("");
+      form.appendChild(div);
+    });
+
+    // ✅ Submit button (added after rendering questions)
+    const submitBtn = document.createElement("button");
+    submitBtn.type = "submit";
+    submitBtn.textContent = "Submit Quiz";
+    submitBtn.style.marginTop = "20px";
+    form.appendChild(submitBtn);
+
+    // 📝 Evaluate quiz on submission
+    form.onsubmit = function (e) {
+      e.preventDefault();
+      let score = 0;
+      questions.forEach((q, i) => {
+        const selected = form.querySelector(`input[name="q${i}"]:checked`);
+        if (selected && selected.value === q.answer) {
+          score++;
+        }
+      });
+
+      result.innerHTML = `🎉 You scored <strong>${score}</strong> out of <strong>${questions.length}</strong>!`;
+
+      // 🎓 Show certificate if passed
+      if (score >= 7) {
+        const name = prompt("Enter your full name for the certificate:");
+        certName.textContent = name || "Cyber Warrior";
+        certDate.textContent = new Date().toLocaleDateString();
+        certID.textContent = "TJN-" + Math.floor(100000 + Math.random() * 900000);
+        certDiv.style.display = "block";
+      } else {
+        certDiv.style.display = "none";
+      }
+    };
+  };
+
+  // 📥 Export certificate as PNG
+  function downloadCertificate() {
+    html2canvas(document.getElementById("certificate")).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'iamTroJan_Certificate.png';
+      link.href = canvas.toDataURL();
+      link.click();
+    });
+  }
+</script>
+
+</body>
+</html>

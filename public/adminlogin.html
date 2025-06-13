@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>iam÷TroJan | ADMIN</title>
+    <link rel="stylesheet" href="assets/css/iamtrojan.css" />
+    <style>
+      body {
+        color: #fff;
+        font-family: Arial, sans-serif;
+        padding: 40px;
+      }
+      .contact-form3 {
+        padding: 20px;
+      max-width: 500px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #00f0ff;
+    }
+    .contact-form3 input{
+      padding: 10px;
+      font-size: 14px;
+      border-radius: 6px;
+      border: 1px solid #00f0ff;
+      background: #1a1f3c;
+      color: #fff;
+      resize: none;
+      }
+    button{
+      padding: 8px 15px;
+      background: #00f0ff;
+      color: black;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+    }
+    h2 {
+      text-align: center;
+      color: #00f0ff;
+    }
+
+    </style>
+
+  </head>
+
+  <body>
+    <header style="text-align: center; padding: 20px;">
+      <h1 class="glitch">
+        <a href="iamtrojan.html" style="text-decoration: none;"><img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo"></a>
+      </h1>
+      <p class="tagline">Empowering You with Cybersecurity Awareness</p>
+    </header>
+
+    <div style="text-align: center; padding: 20px;">
+      <h1 style="color: #00f0ff;">Navigating to ADMIN PAGE</h1>
+    </div>
+
+    <form class="contact-form3" id="adminLogin">
+      <label>Email:</label>
+      <input
+        type="email"
+        name="email"
+        required
+        placeholder="Registered email address"
+      />
+
+      <label>Security Answer:</label>
+      <input
+        type="text"
+        name="answer"
+        required
+        placeholder="Your secret answer"
+      />
+
+      <label>Password:</label>
+      <input
+        type="password"
+        name="password"
+        required
+        placeholder="Enter your  password"
+      />
+
+      <button type="submit">SUBMIT</button>
+    </form>
+
+
+    <script>
+      // Loading user info
+  document.getElementById("adminLogin").onsubmit = async (e) => {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    const res = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    const result = await res.json();
+
+    if (result.success) {
+      localStorage.setItem("iamtrojanAuth", result.token);
+
+      if (result.role === "admin") {
+        localStorage.setItem("adminToken", result.token); // ✅ Use generated token
+        alert("Welcome, Admin!");
+        window.location.href = "dashboard/admin-users.html";
+      } else {
+        window.location.href = "dashboard/user-dashboard.html";
+      }
+    } else {
+      alert("Login failed: " + result.message);
+    }
+  };
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iam÷TroJan | Admin-Users</title>
+  <link rel="stylesheet" href="../assets/css/iamtrojan.css" />
+  <link rel="shortcut icon" type="image/png" sizes="80x80" href="../assets/images/Trojanlogo.png"/>
+  <link rel="stylesheet" href="../assets/Cssn/css/all.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+  <style>
+    body { 
+      font-family: Arial; 
+      padding: 20px; 
+      background: #0f0f0f; 
+      color: #fff; 
+    }
+    .table-container{
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    table {
+      width: 100%; 
+      min-width: 600px;
+      margin-top: 10px; 
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #00f0ff; 
+      padding: 8px;
+      text-align: center;
+    }
+    
+    th { 
+      background-color: #00f0ff; 
+      color: black; 
+    }
+  </style>
+</head>
+
+<body>
+    <header style="text-align: center; padding: 20px;">
+      <h1 class="glitch">
+        <a href="iamtrojan.html" style="text-decoration: none;"><img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo"></a>
+      </h1>
+      <p class="tagline">Empowering You with Cybersecurity Awareness</p>
+    </header>
+
+    <div style="text-align: center; padding: 20px;">
+      <h1 style="color: #00f0ff;">Welcome<span id="userName"></span>! You login as Admin</h1>
+      <p style="color: #ccc; font-weight: bold;">
+        ADMIN PAGE
+      </p>
+      <button class="glow-menu" onclick="logout()">Log Out</button>
+      <button class="glow-menu"><a href="admin-setting.html" style="text-decoration: none;">Dashboard Settings</a></button>
+      <button class="glow-menu"><a href="/admin-certificate.html" style="text-decoration: none;">User Certificates</a></button>
+      
+    </div>
+
+  <h2>All Registered Users</h2>
+    <div class="table-container">
+  <table id="userTable">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Security Q&A</th>
+        <th>Joined</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+    </div>
+
+
+    <script>
+  const token = localStorage.getItem("adminToken");
+  if (!token) {
+    alert("Access Denied: Admins only.");
+    window.location.href = "/iamtrojanlogin.html";
+  }
+
+  fetch("/all-users", {
+    headers: {
+      Authorization: `Bearer ${token}` // ✅ Use the real JWT token
+    }
+  })
+  .then(res => res.json())
+  .then(users => {
+    const tbody = document.querySelector("#userTable tbody");
+    users.forEach(user => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.message}</td>
+        <td><b>Q:</b> ${user.securityQuestion}<br><b>A:</b> ${user.securityAnswer}</td>
+        <td>${new Date(user.createdAt).toLocaleString()}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  })
+  .catch(err => {
+    console.error("Error fetching users:", err);
+    alert("Failed to load user records.");
+  });
+
+  function logout() {
+    localStorage.removeItem("adminToken");
+    window.location.href = "/iamtrojanlogin.html";
+  }
+</script>
+
+</body>
+</html>

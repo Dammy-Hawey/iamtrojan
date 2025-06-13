@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Cybersecurity eLibrary and awareness hub" />
+  <title>TroJan-eLib.com</title>
+  <link rel="shortcut icon" type="image/png" href="mylogoicon.png" />
+  <link rel="stylesheet" href="../assets/css/iamtrojan.css" />
+  <link rel="stylesheet" href="../assets/css/dexlibnn.css" />
+  <link rel="stylesheet" href="../assets/Cssn/css/all.css" />
+  <link rel="shortcut icon" type="image/png" sizes="80x80" href="../assets/images/Trojanlogo.png" />
+
+  <style>
+    #searchInput:focus {
+      outline: none;
+      border-color: #ff0044;
+      box-shadow: 0 0 8px #00f0ff;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const auth = localStorage.getItem("iamtrojanAuth");
+      if (!auth) {
+        localStorage.setItem("returnAfterLogin", "Trojan-eLib.html");
+        alert("Please log in to access the eLibrary.");
+        window.location.href = "iamtrojanlogin.html";
+      }
+    });
+  </script>
+</head>
+<body>
+  <h1 style="text-align:center;color:#00f0ff">Welcome to TroJan eLibrary</h1>
+  <p style="text-align:center;">This page is protected and only accessible to authenticated users.</p>
+
+  <div style="text-align:center; margin:20px;">
+    <h3>📘 Sample Book</h3>
+    <a href="pdfs/sample.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+    <br />
+    <a href="pdfs/sample.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+  </div>
+
+  <script>
+    function validateAccess() {
+      const token = localStorage.getItem("iamtrojanAuth");
+      if (!token) {
+        alert("Unauthorized! Please log in.");
+        window.location.href = "iamtrojanlogin.html";
+        return false;
+      }
+      return true;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard | iam÷TroJan</title>
+  <link rel="stylesheet" href="../assets/css/iamtrojan.css" />
+  <link rel="shortcut icon" type="image/png" sizes="80x80" href="../assets/images/Trojanlogo.png"/>
+  <link rel="stylesheet" href="../assets/Cssn/css/all.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <style>
+        .contact-form {
+        padding: 20px;
+      max-width: 500px;
+      margin: 20px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #00f0ff;
+    }
+    .contact-form input{
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #00f0ff;
+        background: #1a1f3c;
+        color: #fff;
+        resize: none;
+        }
+    </style>
+
+</head>
+<body>
+
+    <header style="text-align: center; padding: 20px;">
+      <h1 class="glitch">
+        <a href="iamtrojan.html" style="text-decoration: none;"><img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo"></a>
+      </h1>
+      <p class="tagline">Empowering You with Cybersecurity Awareness</p>
+    </header>
+
+    <div style="text-align: center; padding: 20px;">
+      <h1 style="color: #00f0ff;">Welcome, <span id="userName">Cyber Warrior</span>!</h1>
+      <p style="color: #ccc; font-weight: bold;">
+        USER DASHBOARD
+      </p>
+      <button class="glow-menu" onclick="logout()">Log Out</button>
+    </div>
+  <!-- <h2>Welcome, <span id="userName">Cyber Warrior</span>!</h2> -->
+
+  <!-- Profile Section -->
+  <!-- Profile Section -->
+<section>
+  <h3>Your Profile</h3>
+  <img
+    id="userPhoto"
+    src="../assets/images/default-avatar.png"
+    alt="User Photo"
+    width="120"
+    style="border-radius: 50%; display: block; margin: 10px auto;"
+  />
+  <p>Email: <span id="userEmail"></span></p>
+</section>
+
+
+  <!-- Course Progress Tracker -->
+  <section style="margin-top: 30px;">
+    <h3>Cybersecurity Course Progress</h3>
+    <div class="contact-form">
+    <p id="progressText">Loading progress...</p>
+    <progress id="courseProgress" value="0" max="10"></progress>
+    <br><br>
+    <button onclick="increaseProgress()">Mark Module Complete</button>
+    </div>
+    <button class="glow-menu"><a href="/courses.html" style="text-decoration: none;">Load Courses</a></button>
+  </section>
+
+  <!-- Profile Update Form -->
+  <section>
+    <h3>Update Your Info</h3>
+    <form class="contact-form" id="updateForm">
+      <label>Full Name:</label>
+      <input type="text" name="name" required>
+
+      <label>Email:</label>
+      <input type="email" name="email" required>
+
+      <label>Cybersecurity Interests:</label>
+      <input type="text" name="interests" placeholder="e.g. Malware, Network Security">
+
+      <button type="submit">Save</button>
+    </form>
+  </section>
+
+  <!-- user-image upload -->
+   <section>
+      <h3>Upload Profile Picture</h3>
+        <form id="uploadForm" class="contact-form">
+      <input type="file" name="photo" accept="image/*" required />
+      <button type="submit">Upload Photo</button>
+    </form>
+
+  <!-- <form class="contact-form" action="/upload-photo" method="POST" enctype="multipart/form-data">
+    <input type="file" name="photo" accept="image/*" required>
+    <button type="submit">Upload Photo</button>
+  </form> -->
+</section>
+
+
+  <script>
+    const token = localStorage.getItem("iamtrojanAuth");
+    if (!token) {
+      alert("Please log in to access your dashboard.");
+      window.location.href = "iamtrojanlogin.html";
+    }
+
+    // Load user info and progress
+    fetch("/me", {
+  headers: { Authorization: `Bearer ${token}` }
+})
+.then(res => res.json())
+.then(data => {
+  if (data.name && data.email) {
+    document.getElementById("userName").innerText = data.name;
+    document.getElementById("userEmail").innerText = data.email;
+    if (data.profileImage) {
+  document.getElementById("userPhoto").src = data.profileImage;
+}
+
+    document.getElementById("courseProgress").value = data.progress || 0;
+    document.getElementById("progressText").innerText = `You've completed ${data.progress || 0} of 10 modules`;
+  } else {
+    alert("Failed to load user info.");
+  }
+})
+.catch(err => {
+  console.error("Error fetching user data:", err);
+  alert("Could not load dashboard. Check console for details.");
+});
+
+    document.getElementById("updateForm").onsubmit = async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData.entries());
+      const res = await fetch("/update-profile", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      alert(result.message);
+    };
+
+    function increaseProgress() {
+      fetch("/increase-progress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      }).then(() => location.reload());
+    }
+
+    // Uploading photo
+    document.getElementById('uploadForm').onsubmit = async function (e) {
+  e.preventDefault();
+  const formData = new FormData();
+  const file = document.querySelector('input[type="file"]').files[0];
+  formData.append("photo", file);
+
+  const token = localStorage.getItem("iamtrojanAuth"); // ✅ Corrected token
+
+  const response = await fetch("/upload-photo", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    body: formData
+  });
+
+  const html = await response.text();
+  document.body.innerHTML = html;
+};
+
+
+    function logout() {
+      localStorage.removeItem("iamtrojanAuth");
+      window.location.href = "/iamtrojanlogin.html";
+    }
+  </script>
+
+  <!--Footer Start-->
+      <div class="futer">
+        <div class="futer-text">
+          <div class="futer-m-text">
+            <h2>LOCATION</h2>
+            <p>340110 FUTA South Gate<br />Akure South, Ondo State 340223</p>
+            <br />
+          </div>
+          <div class="futer-m-text">
+            <h2>HELP SHARE & FOLLOW US</h2>
+            <div class="futer-social">
+              <a href="https://www.facebook.com/m.damolaawole" target="_blank"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="https://www.twitter.com/@DammyHawey" target="_blank"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="https://www.linkedin.com/in/dammyhawey" target="_blank"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+              <a
+                href="https://wa.me/2347067490145?text=Hello%20I%20need%20help%20with%20your%20service"
+                target="_blank"
+                ><i class="fa-brands fa-whatsapp" aria-hidden="true"></i
+              ></a>
+            </div>
+          </div>
+          <div class="futer-m-text">
+            <h2>ABOUT US</h2>
+            <p>
+              <a href="mailto:iamtrojan.com@gmail.com"
+                >iamtrojan.com@gmail.com</a
+              >
+              <b id="close"> </b><br />
+              linkedin.com/in/damolaawowole <b id="close"></b><br />
+              github.com/dammy-hawey<br />
+              (+234)7067490145 <b id="close"></b> (+234)8175016045 <br />
+              <b
+                ><a
+                  href="cisco.netacad.net"
+                  style="text-decoration: none; color: #fff;"
+                >
+                  cisco network academy</a
+                >
+                for hands-on training!</b
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--Footer End-->
+    </section>
+
+    <footer>
+      <p>&copy; 2025 iam÷TroJan. All rights reserved.</p>
+    </footer>
+
+    <!-- Footer end -->
+
+</body>
+</html>

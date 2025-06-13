@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cybersecurity Courses</title>
+  <link rel="stylesheet" href="../assets/css/iamtrojan.css">
+  <style>
+    .lesson {
+      border: 1px solid #00f0ff;
+      padding: 20px;
+      margin: 15px;
+      border-radius: 6px;
+    }
+    .completed {
+      background-color: #e0ffe0;
+    }
+    .lesson h3 {
+      margin: 0;
+    }
+  </style>
+</head>
+<body onload="loadLessons()">
+  <h1 style="color: #00f0ff;text-align: center;">Your Cybersecurity Learning Track</h1>
+  <div id="courseList"></div>
+
+  <script>
+    const token = localStorage.getItem("iamtrojanAuth");
+
+    async function loadLessons() {
+      const res = await fetch("/courses", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const { lessons, completed } = await res.json();
+
+      const list = document.getElementById("courseList");
+      lessons.forEach(lesson => {
+        const div = document.createElement("div");
+        div.className = "lesson" + (completed.includes(lesson.id) ? " completed" : "");
+        div.innerHTML = `
+          <h3>${lesson.title}</h3>
+          <p>${lesson.desc}</p>
+          <button onclick="markComplete('${lesson.id}')">Mark as Complete</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    async function markComplete(id) {
+      const res = await fetch("/mark-complete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ lessonId: id })
+      });
+
+      const result = await res.json();
+      alert(result.message);
+      if (result.success) location.reload();
+    }
+  </script>
+</body>
+</html>

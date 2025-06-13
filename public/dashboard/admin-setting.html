@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learn how to detect and avoid common phishing tactics in cybersecurity."
+    />
+    <title>iamtrojan.com | Admin Settings</title>
+    <link rel="stylesheet" href="../assets/css/iamtrojan.css" />
+    <link rel="stylesheet" href="../dexlibnn.css" />
+    <link rel="stylesheet" href="../assets/Cssn/css/all.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="shortcut icon" type="image/png" sizes="80x80" href="../assets/images/Trojanlogo.png"/>
+    <!-- <link rel="stylesheet" href="assets/fontawesome_620_web/css/all.css"> -->
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+  
+  <style>
+    body { 
+        font-family: Arial; 
+        background: #0f0f0f; 
+        color: #fff; 
+        padding: 20px; 
+    }
+
+    h2, h3 { 
+        color: #00f0ff; 
+    }
+    /* h2{
+        text-align: center;
+    } */
+
+    .table-container{
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    table {
+      width: 100%; 
+      min-width: 600px;
+      margin-top: 10px; 
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #00f0ff; 
+      padding: 8px;
+      text-align: center;
+    }
+    
+    th { 
+        background: #00f0ff; 
+        color: #000; 
+    }
+
+    .section {
+      padding: 20px;
+      max-width: 100%;
+      margin: 30px auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #a00023;
+    }
+    input, select, textarea{
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #00f0ff;
+        background: #1a1f3c;
+        color: #fff;
+        resize: none;
+        }
+    button{
+        padding: 10px 20px;
+        background: #00f0ff;
+        color: black;
+        font-weight: bold;
+        border: none;
+        border-radius: 4px;
+        margin-top: 10px; 
+        cursor: pointer;
+    }
+    button:hover{
+        background-color: aquamarine;
+        color: #1a1f3c;
+    }
+
+    
+
+  </style>
+</head>
+<body>
+  <h2>🔐 Admin Settings Dashboard</h2>
+
+  <!-- Reset Password -->
+  <div class="section">
+    <h3>Reset a User's Password</h3>
+    <label>User's Email:</label>
+    <input type="email" id="resetEmail" placeholder="example@user.com" />
+    <label>New Password:</label>
+    <input type="text" id="newPassword" placeholder="Enter new password" />
+    <button onclick="resetPassword()">Reset Password</button>
+  </div>
+
+  <!-- Change User Role -->
+  <div class="section">
+    <h3>Change User Role</h3>
+    <label>User's Email:</label>
+    <input type="email" id="roleEmail" placeholder="example@user.com" />
+    <label>New Role:</label>
+    <select id="newRole">
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+      <option value="staff">Staff</option>
+    </select>
+    <button onclick="changeRole()">Change Role</button>
+  </div>
+
+  <!-- Broadcast -->
+  <div class="section">
+    <h3>Send Announcement</h3>
+    <label>Message to All Users:</label>
+    <textarea id="broadcastMessage" rows="5" placeholder="Write your announcement here..."></textarea>
+    <button onclick="broadcast()">Send Message</button>
+  </div>
+
+  <!-- All Users -->
+  <div class="section">
+    <h3>All Registered Users</h3>
+    <div class="table-container">
+        <table>
+         <thead>
+          <tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th></tr>
+          </thead>
+          <tbody id="userTableBody"></tbody>
+        </table>
+    </div>
+  </div>
+
+
+  <script>
+  const token = localStorage.getItem("adminToken");
+  if (!token) {
+    alert("Access Denied: Admins only.");
+    window.location.href = "iamtrojanlogin.html";
+  }
+
+  async function resetPassword() {
+    const emailInput = document.getElementById("resetEmail");
+    const passInput = document.getElementById("newPassword");
+
+    const res = await fetch("/admin/reset-password", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        email: emailInput.value,
+        newPassword: passInput.value
+      })
+    });
+
+    const result = await res.json();
+    alert(result.message);
+
+    // ✅ Auto-clear
+    if (result.success) {
+      emailInput.value = "";
+      passInput.value = "";
+    }
+  }
+
+  async function changeRole() {
+    const emailInput = document.getElementById("roleEmail");
+    const roleInput = document.getElementById("newRole");
+
+    const res = await fetch("/admin/change-role", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        email: emailInput.value,
+        role: roleInput.value
+      })
+    });
+
+    const result = await res.json();
+    alert(result.message);
+
+    // ✅ Auto-clear
+    if (result.success) {
+      emailInput.value = "";
+      roleInput.value = "user"; // optional reset to default
+    }
+  }
+
+  async function broadcast() {
+    const msgInput = document.getElementById("broadcastMessage");
+
+    const res = await fetch("/admin/broadcast", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({ message: msgInput.value })
+    });
+
+    const result = await res.json();
+    alert(result.message);
+
+    // ✅ Auto-clear
+    if (result.success) {
+      msgInput.value = "";
+    }
+  }
+
+  async function loadAllUsers() {
+    const res = await fetch("/all-users", {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    const users = await res.json();
+    const tbody = document.getElementById("userTableBody");
+
+    users.forEach(user => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role || "user"}</td>
+        <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  loadAllUsers();
+</script>
+
+</body>
+</html>

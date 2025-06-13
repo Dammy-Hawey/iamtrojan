@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Learn how to detect and avoid common phishing tactics in cybersecurity."
+    />
+    <title>iamtrojan.com | users registration</title>
+    <link rel="stylesheet" href="../assets/css/iamtrojan.css" />
+    <link rel="stylesheet" href="../dexlibnn.css" />
+    <link rel="stylesheet" href="../assets/Cssn/css/all.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/png"
+      sizes="80x80"
+      href="../assets/images/Trojanlogo.png"
+    />
+    <!-- <link rel="stylesheet" href="assets/fontawesome_620_web/css/all.css"> -->
+    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+  </head>
+
+  <body style="color: #fff; font-family: Arial, sans-serif;">
+    <header style="text-align: center; padding: 20px;">
+      <a href="iamtrojan.html" style="text-decoration:none;"><img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo"></a>
+      <p style="color: #ccc;">
+        Explore our cybersecurity tips, insights, and awareness posts by
+        becoming a full member.
+      </p>
+    </header>
+
+    <section style="text-align: center; padding: 20px;">
+      <h1 style="color: #00f0ff;">New Members Registration page!</h1>
+      <p style="color: #ccc;">
+        Your data is secured with us. Please do well to enter your details
+        correctly, thank you.
+      </p>
+    </section>
+
+    <section class="contact" id="contact">
+      <h2 style="color: #00f0ff;">Join iam÷TroJan Community..</h2>
+
+      <form
+        action="/register"
+        method="POST"
+        class="contact-form"
+      >
+        <!-- <form action="https://iamtrojan.onrender.com/register" method="POST" class="contact-form"> -->
+
+        <label>Name:</label>
+        <input type="text" name="name" placeholder="Your Full Name" required />
+
+        <label>Email:</label>
+        <input
+          type="email"
+          name="email"
+          placeholder="example@gmail.com"
+          required
+        />
+
+      <label>Security Question:</label>
+      <input 
+        type="text" 
+        name="securityQuestion" 
+        placeholder="e.g. Your first school" 
+        required 
+        />
+
+      <label>Answer:</label>
+      <input 
+        type="text" 
+        name="securityAnswer" 
+        required
+        />
+
+        <label>Password:</label>
+        <input
+          type="password"
+          name="password"
+          placeholder="choose strong password"
+          required
+        />
+
+          <!-- ✨ Inside your form (after Password) -->
+          <label>
+            <input type="checkbox" onclick="toggleAccessCode(this)"> 
+              Registering as Admin?
+          </label>
+
+          <div id="accessCodeField" style="display: none;">
+            <label>Access Code (admin only):</label>
+            <input 
+              type="text" 
+              name="accessCode" 
+              placeholder="Enter Admin Access Code" 
+            />
+          </div>
+
+        <!-- <label>Enter your access code (STRICTLY for admin-staff):</label>
+        <input 
+        type="text" 
+        name="accessCode" 
+        placeholder="Admin Access Code" 
+        /> -->
+
+
+        <label>Why do you want to join iamtrojan?</label>
+        <textarea
+          name="message"
+          rows="5"
+          placeholder="We appreciate your sincerity..."
+          required
+        ></textarea>
+
+        <button
+          type="submit"
+          style="
+            padding: 8px 15px;
+            background: #00f0ff;
+            color: black;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+          "
+        >
+          Create Account
+        </button>
+      </form>
+
+      <!--Footer Start-->
+      <div class="futer">
+        <div class="futer-text">
+          <div class="futer-m-text">
+            <h2>LOCATION</h2>
+            <p>340110 FUTA South Gate<br />Akure South, Ondo State 340223</p>
+            <br />
+          </div>
+          <div class="futer-m-text">
+            <h2>HELP SHARE & FOLLOW US</h2>
+            <div class="futer-social">
+              <a href="https://www.facebook.com/m.damolaawole" target="_blank"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="https://www.twitter.com/@DammyHawey" target="_blank"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="https://www.linkedin.com/in/dammyhawey" target="_blank"
+                ><i class="fab fa-linkedin"></i
+              ></a>
+              <a
+                href="https://wa.me/2347067490145?text=Hello%20I%20need%20help%20with%20your%20service"
+                target="_blank"
+                ><i class="fa-brands fa-whatsapp" aria-hidden="true"></i
+              ></a>
+            </div>
+          </div>
+          <div class="futer-m-text">
+            <h2>ABOUT US</h2>
+            <p>
+              <a href="mailto:iamtrojan.com@gmail.com"
+                >iamtrojan.com@gmail.com</a
+              >
+              <b id="close"> </b><br />
+              linkedin.com/in/damolaawowole <b id="close"></b><br />
+              github.com/dammy-hawey<br />
+              (+234)7067490145 <b id="close"></b> (+234)8175016045 <br />
+              <b
+                ><a
+                  href="cisco.netacad.net"
+                  style="text-decoration: none; color: #fff;"
+                >
+                  cisco network academy</a
+                >
+                for hands-on training!</b
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+      <!--Footer End-->
+    </section>
+
+    <footer>
+      <p>&copy; 2025 iam÷TroJan. All rights reserved.</p>
+    </footer>
+    <!-- Footer end -->
+
+    <script>
+  function toggleAccessCode(checkbox) {
+    const field = document.getElementById("accessCodeField");
+    field.style.display = checkbox.checked ? "block" : "none";
+  }
+</script>
+
+  </body>
+</html>

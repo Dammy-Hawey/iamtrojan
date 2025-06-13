@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iam÷TroJan | Certificates</title>
+  <link rel="stylesheet" href="../assets/css/iamtrojan.css" />
+  
+  <style>
+    body { background: #0d1117; color: #fff; font-family: sans-serif; padding: 30px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { padding: 12px; border: 1px solid #00f0ff; text-align: center; }
+    th { background: #00f0ff; color: black; }
+    h2 { color: #00f0ff; text-align: center; }
+    .btn { background: #00f0ff; color: #000; padding: 6px 12px; border-radius: 4px; font-weight: bold; }
+  </style>
+
+</head>
+
+<body>
+  <h2>📜 Issued Certificates</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Score</th>
+        <th>Cert ID</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="certTableBody">
+      <!-- Fetched from backend -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch("/get-certificates")
+      .then(res => res.json())
+      .then(certs => {
+        const tbody = document.getElementById("certTableBody");
+        certs.forEach(cert => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${cert.name}</td>
+            <td>${cert.score}</td>
+            <td>${cert.certId}</td>
+            <td>${cert.date}</td>
+            <td><button class="btn" onclick="generateCert('${cert.name}', '${cert.certId}', '${cert.date}')">Download PDF</button></td>
+          `;
+          tbody.appendChild(row);
+        });
+      });
+
+    function generateCert(name, certId, date) {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF("landscape", "pt", "a4");
+      const pageWidth = doc.internal.pageSize.getWidth();
+
+      doc.setFillColor("#0d1117");
+      doc.rect(0, 0, pageWidth, doc.internal.pageSize.getHeight(), "F");
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(32);
+      doc.setTextColor("#00f0ff");
+      doc.text("Certificate of Completion", pageWidth / 2, 160, { align: "center" });
+
+      doc.setFontSize(18);
+      doc.setFont("helvetica", "normal");
+      doc.setTextColor("#fff");
+      doc.text("This certifies that", pageWidth / 2, 200, { align: "center" });
+
+      doc.setFontSize(24);
+      doc.setFont("helvetica", "bold");
+      doc.setTextColor("#00f0ff");
+      doc.text(name, pageWidth / 2, 240, { align: "center" });
+
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(18);
+      doc.setTextColor("#fff");
+      doc.text("has successfully completed the Cybersecurity Awareness Quiz", pageWidth / 2, 280, { align: "center" });
+
+      doc.setFontSize(14);
+      doc.setTextColor("#aaa");
+      doc.text(`Certificate ID: ${certId}`, 100, 350);
+      doc.text(`Date: ${date}`, 100, 370);
+
+      doc.setFontSize(12);
+      doc.setTextColor("#00f0ff");
+      doc.text("iam÷TroJan — Empowering Digital Safety", pageWidth / 2, 520, { align: "center" });
+
+      doc.save(`iamTrojan_Certificate_${certId}.pdf`);
+    }
+  </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>

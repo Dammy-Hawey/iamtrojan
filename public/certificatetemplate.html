@@ -1,0 +1,64 @@
+<!-- public/certificate.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iam÷TroJan Certificate</title>
+  <style>
+    body {
+      background: #f9f9f9;
+      font-family: 'Georgia', serif;
+      padding: 40px;
+      color: #333;
+      text-align: center;
+    }
+    .certificate {
+      border: 8px double #00f0ff;
+      padding: 40px;
+      background: white;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    h1 {
+      color: #00f0ff;
+      font-size: 36px;
+    }
+    .name {
+      font-size: 28px;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    .subtitle {
+      font-size: 20px;
+      margin-bottom: 40px;
+    }
+    .footer {
+      margin-top: 40px;
+      font-size: 14px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="certificate">
+    <h1>Certificate of Completion</h1>
+    <p class="subtitle">This is to proudly certify that</p>
+    <div class="name" id="userName">[Your Name]</div>
+    <p class="subtitle">has successfully completed the course</p>
+    <div class="name">Cybersecurity Fundamentals</div>
+    <p class="subtitle">Presented by <b>iam÷TroJan</b></p>
+
+    <div class="footer">
+      <p>Date: <span id="date"></span></p>
+      <p>Signed: Damola D. Awowole, Founder</p>
+    </div>
+  </div>
+
+  <script>
+    const name = localStorage.getItem("iamtrojanUserName") || "Cyber Warrior";
+    document.getElementById("userName").innerText = name;
+    document.getElementById("date").innerText = new Date().toLocaleDateString();
+  </script>
+</body>
+</html>

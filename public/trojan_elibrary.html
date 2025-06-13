@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Cybersecurity eLibrary and awareness hub">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TroJan-eLib.com</title>
+    <link rel="shortcut icon" type="image/png" href="mylogoicon.png">
+    <link rel="stylesheet" href="../assets/css/iamtrojan.css">
+    <link rel="stylesheet" href="../assets/css/dexlibnn.css">
+    <link rel="stylesheet" href="../assets/Cssn/css/all.css">
+    <link rel="shortcut icon" type="image/png" sizes="80x80" href="../assets/images/Trojanlogo.png">
+
+    <style>
+        #searchInput:focus {
+  outline: none;
+  border-color: #ff0044;
+  box-shadow: 0 0 8px #00f0ff;
+}
+
+    </style>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '353041689');
+    </script>
+
+    <!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const auth = localStorage.getItem("iamtrojanAuth");
+      if (!auth) {
+        localStorage.setItem("returnAfterLogin", "Trojan-eLib.html");
+        alert("Please log in to access the eLibrary.");
+        window.location.href = "iamtrojanlogin.html";
+      }
+    });
+  </script> -->
+
+</head>
+
+<body>
+<script>
+  // 🛡️ Secure access: block page if not logged in
+  (() => {
+    const token = localStorage.getItem('iamtrojanAuth');
+    if (!token) {
+      // Save current page for redirect after login
+      localStorage.setItem("returnAfterLogin", "Trojan-eLib.html");
+      alert("Access denied. Please log in to access the eLibrary.");
+      window.location.href = "iamtrojanlogin.html";
+    }
+  })();
+</script>
+
+        
+    <div class="main-body">
+        <header class="h3-hero">
+            <div class="header-layer">
+                <h1 class="glitch">
+        <a href="iamtrojan.html" style="text-decoration: none;"><img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo"></a>
+      </h1>
+                <p class="tagline">Empowering You with Cybersecurity Awareness</p>
+            </div>
+        </header>
+
+            <nav>
+                <a class="glow-menu" href="iamtrojan.html">Home</a>
+                <a class="glow-menu" href="iamtrojan.html">About</a>
+                <a class="glow-menu" href="iamtrojan.html">Tips</a>
+                <a class="glow-menu" href="iamtrojan.html">Combo</a>
+                <a class="glow-menu" href="#contact">Contact</a>
+            </nav>
+
+                
+
+        <!-- E-library section start -->
+        <div style="text-align: center; margin-bottom: 20px;margin-top: 20px;">
+            <button class="filter-btn" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="tech">IT & Tech</button>
+            <button class="filter-btn" data-filter="christian">Christian</button>
+            <button class="filter-btn" data-filter="personal">Personal Dev</button>
+            <button class="filter-btn" data-filter="motivation">Motivation</button>
+          </div>
+          
+        <div style="text-align: center; margin-top: 20px;">
+            <input type="text" id="searchInput" placeholder="Search for books..." style="padding: 10px; width: 60%; border: 2px solid #00f0ff; border-radius: 6px; font-size: 16px;">
+          </div>
+          
+        <section class="elibrary">
+            <!-- <h2>Committ Yourself to STUDIES!</h2> -->
+             <h1 style="text-align:center;color:#00f0ff">Welcome to TroJan eLibrary</h1>
+  <p style="text-align:center;">This page is protected and only accessible to authenticated users.</p>
+
+        <div class="h3-main1 h3-content h3-padding" style="margin-top:30px;">
+            <h3 class="h3-scool">The TROJAN e-Library section</h3>
+
+            <!-- First Photo Grid-->
+            <div class="bottom-gap h3-row-padding h3-padding-16 h3-center" id="food">
+        
+              <div class="h3-quarter" data-category = "christian">
+                <div class="dexlib1" style="text-align: center;">
+                    <i>Available</i>
+                    <br><br><br><br><br><br><br>
+                <b class="dexbld">
+                    <!-- <a href="pdfs/Cloud Computing Security Foundations.pdf" download onclick="return validateAccess()">DOWNLOAD</a> -->
+                    <a href="#" onclick="secureDownload('Cloud Computing Security Foundations.pdf')">DOWNLOAD</a>
+                </b>
+                <b class="dexbld">
+                    <!-- <a href="pdfs/Cloud Computing Security Foundations.pdf" target="_blank" onclick="return validateAccess()">READ</a> -->
+                    <a href="#" onclick="openSecurePDF('Cloud Computing Security Foundations.pdf')">READ</a>
+                </b>
+                </div>
+                <h3>Cloud Computing Security.pdf</h3>
+                <p>Foundations and Challenges by John R. Vacca</p>
+              </div>
+        
+              <div class="h3-quarter" data-category="tech">
+                <div class="dexlib2" style="text-align: center;">
+                    <i>Available</i>
+                    <br><br><br><br><br><br><br>
+                    <b class="dexbld">
+                    <a href="pdfs/Cognitive Machine Intelligence Applications.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                    </b>
+                    <b class="dexbld">
+                        <a href="pdfs/Cognitive Machine Intelligence Applications.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                    </b>
+                
+                </div>
+                <h3>Cognitive Machine Intelligence Applications</h3>
+                <p>Challenges and Related Technologies by Inam and Salma</p>
+              </div>
+        
+              <div class="h3-quarter" data-category="motivation">
+                <div class="dexlib3" style="text-align: center;">
+                    <i>Available</i>
+                    <br><br><br><br><br><br><br>
+                    <b class="dexbld">
+                    <a href="pdfs/Cyber Security Social Engineering.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                    </b>
+                    <b class="dexbld">
+                        <a href="pdfs/Cyber Security Social Engineering.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                    </b>
+                
+                </div>
+                <h3>Cyber Security Social Engineering</h3>
+                <p>Hacking Human Firewalls by Nishad and Bharat</p>
+              </div>
+        
+            </div>
+            
+        <!-- Second Photo Grid-->
+        <div class="h3-row-padding h3-padding-16 h3-center" style="margin-top: 50px;">
+        
+                <div class="h3-quarter">
+                    <div class="dexlib4" style="text-align: center;">
+                        <i>Available</i>
+                        <br><br><br><br><br><br><br>
+                        <b class="dexbld">
+                        <a href="pdfs/Cyber Defense Mechanisms.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                    </b>
+                    <b class="dexbld">
+                        <a href="pdfs/Cyber Defense Mechanisms.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                    </b>
+                    
+                    </div>
+                    <h3>Cyber Defense Mechanisms</h3>
+                    <p>Security, Privacy, and Challenges</p>
+                  </div>
+                
+                <div class="h3-quarter">
+                    <div class="dexlib5" style="text-align: center;">
+                        <i>Available</i>
+                        <br><br><br><br><br><br><br>
+                        <b class="dexbld">
+                        <a href="pdfs/A+ Certification Bible.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                    </b>
+                    <b class="dexbld">
+                        <a href="pdfs/A+ Certification Bible.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                    </b>
+                    
+                    </div>
+                    <h3>A+ Certification Bible for IT skills at any level!</h3>
+                    <p>Diving into the World of Information and Technology!</p>
+                  </div>
+        
+              <div class="h3-quarter">
+                <div class="dexlib6" style="text-align: center;">
+                    <i>Available</i>
+                    <br><br><br><br><br><br><br>
+                    <b class="dexbld">
+                    <a href="pdfs/Windows Registry Tips and Tweaks.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                    </b>
+                    <b class="dexbld">
+                        <a href="pdfs/Windows Registry Tips and Tweaks.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                    </b>
+                
+                </div>
+                <h3>Windows Registry Tips and Tweaks</h3>
+                <p>Learning the INs and OUTs of Windows OS</p>
+              </div>
+        
+            </div>
+            
+        <!-- Third Photo Grid-->
+        <div class="h3-row-padding h3-padding-16 h3-center" style="margin-top: 50px;">
+
+        <div class="h3-quarter">
+            <div class="dexlib7" style="text-align: center;">
+                <i>Available</i>
+                <br><br><br><br><br><br><br>
+                <b class="dexbld">
+                    <a href="pdfs/Nature-Inspired Cyber Security and Resiliency.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                </b>
+                <b class="dexbld">
+                    <a href="pdfs/Nature-Inspired Cyber Security and Resiliency.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                </b>
+            
+            </div>
+            <h3>Nature-Inspired Cyber Security and Resiliency</h3>
+            <p>Fundamentals, techniques and applications by El-Alfy & Eltoweissy</p>
+          </div>
+    
+        <div class="h3-quarter">
+            <div class="dexlib8" style="text-align: center;">
+                <i>Available</i>
+                <br><br><br><br><br><br><br>
+                <b class="dexbld">
+                    <a href="pdfs/Mano - Digital Design 5E.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                </b>
+                <b class="dexbld">
+                    <a href="pdfs/Mano - Digital Design 5E.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                </b>
+            
+            </div>
+            <h3>Mano - Digital Design 5G</h3>
+            <p>Mano - Embedding Digital Design into 5G</p>
+          </div>
+        
+        <div class="h3-quarter">
+            <div class="dexlib9" style="text-align: center;">
+                <i>Available</i>
+                <br><br><br><br><br><br><br>
+                <b class="dexbld">
+                    <a href="pdfs/CompTIA A+ 220-701.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                </b>
+                <b class="dexbld">
+                    <a href="pdfs/CompTIA A+ 220-701.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                </b>
+            
+            </div>
+            <h3>CompTIA A+ 220-701 Prep Question</h3>
+            <p>Diving into the World of Professionals.</p>
+          </div>
+
+        </div>
+
+        <!-- Fourth photo grid -->
+
+        <div class="h3-row-padding h3-padding-16 h3-center" style="margin-top: 50px;">
+
+            <div class="h3-quarter">
+                <div class="dexlib10" style="text-align: center;">
+                    <i>Available</i>
+                    <br><br><br><br><br><br><br>
+                    <b class="dexbld">
+                    <a href="pdfs/CompTIA A+ 220-702.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                </b>
+                <b class="dexbld">
+                    <a href="pdfs/CompTIA A+ 220-702.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                </b>
+                
+                </div>
+                <h3>CompTIA A+ 220-702</h3>
+                <p>Professionals' Check-point for H+ Scrutiny.</p>
+            </div>
+    
+            <div class="h3-quarter">
+                <div class="dexlib11" style="text-align: center;">
+                    <i>Available</i>
+                    <br><br><br><br><br><br><br>
+                    <b class="dexbld">
+                    <a href="pdfs/Web_Security_Fundamentals_Guide.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                    </b>
+                    <b class="dexbld">
+                        <a href="pdfs/Web_Security_Fundamentals_Guide.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                    </b>
+                
+                </div>
+                <h3>Web_Security_Fundamentals_Guide</h3>
+                <p>Securing the CONNECTIVITY, Protecting life!</p>
+            </div>
+    
+            <div class="h3-quarter">
+                <div class="dexlib12" style="text-align: center;">
+                    <i>Available</i>
+                    <br><br><br><br><br><br><br>
+                    <b class="dexbld">
+                    <a href="pdfs/Uncovering the Darknet.pdf" download onclick="return validateAccess()">DOWNLOAD</a>
+                    </b>
+                    <b class="dexbld">
+                        <a href="pdfs/Uncovering the Darknet.pdf" target="_blank" onclick="return validateAccess()">READ</a>
+                    </b>
+
+                    </div>
+                    <h3>Uncovering the Darknet</h3>
+                    <p>Becoming a Valuable ASSET by Breawing ACCESS!</p>
+                </div>
+            </div>
+
+        <!--  -->
+        </div>
+        
+        </div>
+          
+            <!-- Pagination -->
+            <div class="h3-center h3-padding-32">
+              <ul class="h3-pagination">
+                <li><a class="h3-black" href="#">1</a></li>
+                <li><a class="h3-hover-black" href="#">2</a></li>
+                <li><a class="h3-hover-black" href="#">3</a></li>
+                <li><a class="h3-hover-black" href="#">4</a></li>
+                <li><a class="h3-hover-black" href="#">»</a></li>
+              </ul>
+            </div>
+            
+            <!-- <hr id="about"> -->
+            <hr class="line1" width="55%">
+        
+                <!-- This is for Pagination directories -->
+            <div class="formore">
+                <h5>Need Video Tutorials...?
+                    <a href="tutorialvideos.html">Check here >></a>
+                </h5>
+            </div>
+                
+            <hr class="line2" width="50%">
+            <br><br>
+
+        </section>
+
+            <!-- E-library section ends -->
+        
+
+        <section class="contact" id="contact">
+            <h2>Contact</h2>
+            <p>Have suggestions or questions? Reach out via social media or email us at </p>
+
+            <form action="https://formsubmit.co/iamtrojan.com@gmail.com" method="POST" class="contact-form">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
+              </form>
+              
+
+            <!--Footer Start-->
+        <div class="futer">
+            <div class="futer-text">
+                <div class="futer-m-text">
+                    <h2>LOCATION</h2>
+                    <p>340110 FUTA South Gate<br>Akure South, Ondo State 340223</p><br>
+                    
+                </div>
+                <div class="futer-m-text">
+                    <h2>HELP SHARE & FOLLOW US</h2>
+                    <div class="futer-social">
+                        <a href="https://www.facebook.com/m.damolaawole" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.twitter.com/@DammyHawey" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/dammyhawey" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://wa.me/2347067490145?text=Hello%20I%20need%20help%20with%20your%20service" target="_blank"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></a>
+                    </div>
+                </div>
+                <div class="futer-m-text">
+                    <h2>ABOUT US</h2>
+                    <p><a href="mailto:iamtrojan.com@gmail.com">iamtrojan.com@gmail.com</a> <b id="close">
+                    </b><br>  linkedin.com/in/damolaawowole  <b id="close"></b><br>  github.com/dammy-hawey<br/>
+                        (+234)7067490145 <b id="close"></b> (+234)8175016045 <br>
+                    <b><a href="netacad.net" style="text-decoration: none;color: #fff;">
+                        cisco network academy</a> for training and teaching!</b>
+                </p>
+                </div>
+            </div>
+            <!-- <div class="futer-copyright">
+                <p>
+                    Copyright &copy; 2025 Damola D. Awowole 
+                    <br> <b>Powered by: HAWEYTECH.</b> 
+                </p>
+            </div> -->
+        </div>
+        <!--Footer End-->
+        </section>
+
+        <footer>
+            <p>&copy; 2025 iam÷TroJan. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- book access validation -->
+    <script>
+  function secureDownload(filename) {
+    const token = localStorage.getItem("iamtrojanAuth");
+    if (!token) {
+      alert("Please log in first.");
+      window.location.href = "iamtrojanlogin.html";
+      return;
+    }
+
+    fetch(`/secure-download/${encodeURIComponent(filename)}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Unauthorized or file not found");
+      return res.blob();
+    })
+    .then(blob => {
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    })
+    .catch(err => {
+      console.error("Download failed", err);
+      alert("Failed to download. Please log in again.");
+    });
+  }
+</script>
+
+<!-- JS for Reading access -->
+ <script>
+  function openSecurePDF(filename) {
+    const token = localStorage.getItem("iamtrojanAuth");
+    if (!token) {
+      alert("Please log in first.");
+      window.location.href = "iamtrojanlogin.html";
+      return;
+    }
+
+    // Open in a new tab with token in the header using a workaround (since headers don't work with <a>)
+    fetch(`/secure-pdf/${encodeURIComponent(filename)}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      if (!res.ok) throw new Error("Unauthorized or file not found");
+      return res.blob();
+    })
+    .then(blob => {
+      const url = URL.createObjectURL(blob);
+      window.open(url, '_blank');
+    })
+    .catch(err => {
+      console.error(err);
+      alert("Failed to open PDF. Are you logged in?");
+    });
+  }
+</script>
+
+
+    <!-- JS script for book searching -->
+    <script>
+        const searchInput = document.getElementById('searchInput');
+      
+        searchInput.addEventListener('keyup', function () {
+          const filter = searchInput.value.toLowerCase();
+          const bookCards = document.querySelectorAll('.h3-quarter');
+      
+          bookCards.forEach(card => {
+            const text = card.innerText.toLowerCase();
+            card.style.display = text.includes(filter) ? 'block' : 'none';
+          });
+        });
+      </script>
+      
+      <script>
+        const filterButtons = document.querySelectorAll('.filter-btn');
+      
+        filterButtons.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const filter = btn.getAttribute('data-filter');
+            const bookCards = document.querySelectorAll('.h3-quarter');
+      
+            bookCards.forEach(card => {
+              const category = card.getAttribute('data-category');
+              if (filter === 'all' || category === filter) {
+                card.style.display = 'block';
+              } else {
+                card.style.display = 'none';
+              }
+            });
+          });
+        });
+      </script>
+      
+     <!-- js ends -->
+
+    <script src="../assets/js/script.js"></script>
+    <!-- Fontawesome JS file Include -->
+    <script src="js/all.min.js"></script>
+</body>
+</html>
