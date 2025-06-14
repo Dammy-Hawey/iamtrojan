@@ -73,13 +73,3 @@ PRs, issues, and suggestions are welcome! Kindly fork the repository and submit 
 
     “The prudent sees danger and hides himself, but the simple go on and suffer for it.” — Proverbs 22:3
 
-
----
-
-### ✅ Next Step:
-- Save it as `README.md` in the root of your project.
-- Git commit and push:
-  ```bash
-  git add README.md
-  git commit -m "Add project README"
-  git push origin main
