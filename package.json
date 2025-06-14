@@ -4,7 +4,11 @@
   "description": "Node.js backend for iam÷TroJan registration",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "engines": {
+  "node": ">=18.0.0"
+}
+
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
