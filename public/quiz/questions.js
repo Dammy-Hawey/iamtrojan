@@ -97,109 +97,109 @@ const allCyberQuestions = {
     ],
     answer: "Delete it or report as spam"
   },
-//   {
-//     q: "11. What is the safest place to store your password?",
-//     options: [
-//       "In your notebook",
-//       "Inside your email inbox",
-//       "In a password manager",
-//       "On a sticky note"
-//     ],
-//     answer: "In a password manager"
-//   },
-//   {
-//     q: "12. What does 2FA mean?",
-//     options: [
-//       "Two-Firewall Access",
-//       "Two-Factor Authentication",
-//       "Twice-Formed Application",
-//       "Two-Faced Authorization"
-//     ],
-//     answer: "Two-Factor Authentication"
-//   },
+  {
+    q: "11. What is the safest place to store your password?",
+    options: [
+      "In your notebook",
+      "Inside your email inbox",
+      "In a password manager",
+      "On a sticky note"
+    ],
+    answer: "In a password manager"
+  },
+  {
+    q: "12. What does 2FA mean?",
+    options: [
+      "Two-Firewall Access",
+      "Two-Factor Authentication",
+      "Twice-Formed Application",
+      "Two-Faced Authorization"
+    ],
+    answer: "Two-Factor Authentication"
+  },
 
-//   // ➕ Now continuing from 11 to 40...
+  // ➕ Now continuing from 11 to 40...
 
-//   {
-//     q: "13. What does antivirus software do?",
-//     options: [
-//       "Makes your computer faster",
-//       "Protects against viruses and malware",
-//       "Cleans your desktop",
-//       "Improves internet speed"
-//     ],
-//     answer: "Protects against viruses and malware"
-//   },
-//   {
-//     q: "14. What is the main goal of a firewall?",
-//     options: [
-//       "Speed up the internet",
-//       "Filter network traffic and block threats",
-//       "Encrypt hard drives",
-//       "Back up files"
-//     ],
-//     answer: "Filter network traffic and block threats"
-//   },
-//   {
-//     q: "15. What’s an example of personal identifiable information (PII)?",
-//     options: [
-//       "Your favorite color",
-//       "Your dog’s name",
-//       "Your phone number",
-//       "The movies you watch"
-//     ],
-//     answer: "Your phone number"
-//   },
-//   {
-//     q: "16. Which is a secure way to connect to a public Wi-Fi?",
-//     options: [
-//       "Connect without password",
-//       "Use VPN while connected",
-//       "Always accept terms and conditions",
-//       "Disable firewall"
-//     ],
-//     answer: "Use VPN while connected"
-//   },
-//   {
-//     q: "17. What’s the best way to keep your software safe?",
-//     options: [
-//       "Update regularly",
-//       "Never update",
-//       "Use old versions",
-//       "Install cracked versions"
-//     ],
-//     answer: "Update regularly"
-//   },
-//   {
-//     q: "18. Which of the following can protect you from phishing?",
-//     options: [
-//       "Using dark mode",
-//       "Enabling pop-ups",
-//       "Double-checking sender email",
-//       "Downloading attachments"
-//     ],
-//     answer: "Double-checking sender email"
-//   },
-//   {
-//     q: "19. What is ransomware?",
-//     options: [
-//       "A type of cleaning software",
-//       "A harmless application",
-//       "A malware that locks files for ransom",
-//       "A password manager"
-//     ],
-//     answer: "A malware that locks files for ransom"
-//   },
-//   {
-//     q: "20. If a site says 'Not Secure' in the browser, what should you do?",
-//     options: [
-//       "Enter your password anyway",
-//       "Ignore the warning",
-//       "Close the site or avoid logging in",
-//       "Click on ads"
-//     ],
-//     answer: "Close the site or avoid logging in"
-//   },
+  {
+    q: "13. What does antivirus software do?",
+    options: [
+      "Makes your computer faster",
+      "Protects against viruses and malware",
+      "Cleans your desktop",
+      "Improves internet speed"
+    ],
+    answer: "Protects against viruses and malware"
+  },
+  {
+    q: "14. What is the main goal of a firewall?",
+    options: [
+      "Speed up the internet",
+      "Filter network traffic and block threats",
+      "Encrypt hard drives",
+      "Back up files"
+    ],
+    answer: "Filter network traffic and block threats"
+  },
+  {
+    q: "15. What’s an example of personal identifiable information (PII)?",
+    options: [
+      "Your favorite color",
+      "Your dog’s name",
+      "Your phone number",
+      "The movies you watch"
+    ],
+    answer: "Your phone number"
+  },
+  {
+    q: "16. Which is a secure way to connect to a public Wi-Fi?",
+    options: [
+      "Connect without password",
+      "Use VPN while connected",
+      "Always accept terms and conditions",
+      "Disable firewall"
+    ],
+    answer: "Use VPN while connected"
+  },
+  {
+    q: "17. What’s the best way to keep your software safe?",
+    options: [
+      "Update regularly",
+      "Never update",
+      "Use old versions",
+      "Install cracked versions"
+    ],
+    answer: "Update regularly"
+  },
+  {
+    q: "18. Which of the following can protect you from phishing?",
+    options: [
+      "Using dark mode",
+      "Enabling pop-ups",
+      "Double-checking sender email",
+      "Downloading attachments"
+    ],
+    answer: "Double-checking sender email"
+  },
+  {
+    q: "19. What is ransomware?",
+    options: [
+      "A type of cleaning software",
+      "A harmless application",
+      "A malware that locks files for ransom",
+      "A password manager"
+    ],
+    answer: "A malware that locks files for ransom"
+  },
+  {
+    q: "20. If a site says 'Not Secure' in the browser, what should you do?",
+    options: [
+      "Enter your password anyway",
+      "Ignore the warning",
+      "Close the site or avoid logging in",
+      "Click on ads"
+    ],
+    answer: "Close the site or avoid logging in"
+  },
 //   {
 //     q: "21. Which of these is a secure password example?",
 //     options: [
