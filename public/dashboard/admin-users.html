@@ -82,35 +82,35 @@
 
     <script>
   const token = localStorage.getItem("adminToken");
-  if (!token) {
-    alert("Access Denied: Admins only.");
-    window.location.href = "/iamtrojanlogin.html";
-  }
+if (!token) {
+  alert("Access Denied: Admins only.");
+  window.location.href = "/iamtrojanlogin.html";
+}
 
-  fetch("/all-users", {
-    headers: {
-      Authorization: `Bearer ${token}` // ✅ Use the real JWT token
-    }
-  })
-  .then(res => res.json())
-  .then(users => {
-    const tbody = document.querySelector("#userTable tbody");
-    users.forEach(user => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${user.name}</td>
-        <td>${user.email}</td>
-        <td>${user.message}</td>
-        <td><b>Q:</b> ${user.securityQuestion}<br><b>A:</b> ${user.securityAnswer}</td>
-        <td>${new Date(user.createdAt).toLocaleString()}</td>
-      `;
-      tbody.appendChild(row);
-    });
-  })
-  .catch(err => {
-    console.error("Error fetching users:", err);
-    alert("Failed to load user records.");
+fetch("https://iamtrojan.onrender.com/all-users", {
+  headers: {
+    Authorization: `Bearer ${token}` // Use admin token from login
+  }
+})
+.then(res => res.json())
+.then(users => {
+  const tbody = document.querySelector("#userTable tbody");
+  users.forEach(user => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${user.name}</td>
+      <td>${user.email}</td>
+      <td>${user.message}</td>
+      <td><b>Q:</b> ${user.securityQuestion}<br><b>A:</b> ${user.securityAnswer}</td>
+      <td>${new Date(user.createdAt).toLocaleString()}</td>
+    `;
+    tbody.appendChild(row);
   });
+})
+.catch(err => {
+  console.error("Error fetching users:", err);
+  alert("Failed to load user records.");
+});
 
   function logout() {
     localStorage.removeItem("adminToken");
