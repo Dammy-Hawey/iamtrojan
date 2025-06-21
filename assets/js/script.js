@@ -2,7 +2,7 @@ console.log('iam÷TroJan site loaded.');
 
 //glowing button start
 
-const menuLinks = document.querySelectorAll('.glow-menu');
+const menuLinks = document.querySelectorAll('.glow-menu2');
 
 const colors = ['#00f0ff', '#ff00ff', '#00ff88', '#ff8800', '#ff0044'];
 
@@ -42,58 +42,123 @@ menuLinks.forEach(link => {
 //glowing button ends
 
 // Auto & Manual Slide Carousel
-const slideContainer = document.getElementById("slideContainer");
-const totalSlides = slideContainer.children.length;
-const dotsContainer = document.getElementById("dotsContainer");
-const slider = document.getElementById("slider");
+// Utility function to init any slider by ID group
+function initSlider(config) {
+  const {
+    sliderId,
+    containerId,
+    dotsId,
+    nextBtnId,
+    prevBtnId
+  } = config;
 
-let index = 0;
-let interval;
+  const slider = document.getElementById(sliderId);
+  const slideContainer = document.getElementById(containerId);
+  const dotsContainer = document.getElementById(dotsId);
+  const slides = slideContainer.children;
+  const totalSlides = slides.length;
 
-function showSlide(i) {
-  index = (i + totalSlides) % totalSlides;
-  slideContainer.style.transform = `translateX(-${index * 100}%)`;
-  updateDots();
-}
+  let index = 0;
+  let interval;
 
-function updateDots() {
-  Array.from(dotsContainer.children).forEach((dot, i) => {
-    dot.classList.toggle('active', i === index);
+  function showSlide(i) {
+    index = (i + totalSlides) % totalSlides;
+    slideContainer.style.transform = `translateX(-${index * 100}%)`;
+    updateDots();
+  }
+
+  function updateDots() {
+    Array.from(dotsContainer.children).forEach((dot, i) => {
+      dot.classList.toggle('active', i === index);
+    });
+  }
+
+  function startSlider() {
+    interval = setInterval(() => showSlide(index + 1), 4000);
+  }
+
+  function stopSlider() {
+    clearInterval(interval);
+  }
+
+  // Create dots
+  for (let i = 0; i < totalSlides; i++) {
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
+    dot.addEventListener('click', () => showSlide(i));
+    dotsContainer.appendChild(dot);
+  }
+
+  document.getElementById(nextBtnId).onclick = () => showSlide(index + 1);
+  document.getElementById(prevBtnId).onclick = () => showSlide(index - 1);
+
+  // Pause on hover
+  slider.addEventListener('mouseenter', stopSlider);
+  slider.addEventListener('mouseleave', startSlider);
+
+  // Touch support
+  let touchStartX = 0;
+  slider.addEventListener('touchstart', (e) => touchStartX = e.touches[0].clientX);
+  slider.addEventListener('touchend', (e) => {
+    let touchEndX = e.changedTouches[0].clientX;
+    if (touchStartX - touchEndX > 50) showSlide(index + 1);
+    else if (touchEndX - touchStartX > 50) showSlide(index - 1);
   });
+
+  // Init
+  showSlide(0);
+  startSlider();
 }
 
-function startSlider() {
-  interval = setInterval(() => showSlide(index + 1), 4000);
-}
-
-function stopSlider() {
-  clearInterval(interval);
-}
-
-// Create dots dynamically
-for (let i = 0; i < totalSlides; i++) {
-  const dot = document.createElement('span');
-  dot.classList.add('dot');
-  dot.addEventListener('click', () => showSlide(i));
-  dotsContainer.appendChild(dot);
-}
-
-document.getElementById("nextBtn").onclick = () => showSlide(index + 1);
-document.getElementById("prevBtn").onclick = () => showSlide(index - 1);
-
-// Pause on hover
-slider.addEventListener('mouseenter', stopSlider);
-slider.addEventListener('mouseleave', startSlider);
-
-// Touch swipe
-let touchStartX = 0;
-slider.addEventListener('touchstart', (e) => touchStartX = e.touches[0].clientX);
-slider.addEventListener('touchend', (e) => {
-  let touchEndX = e.changedTouches[0].clientX;
-  if (touchStartX - touchEndX > 50) showSlide(index + 1);
-  else if (touchEndX - touchStartX > 50) showSlide(index - 1);
+// Initialize both sliders
+initSlider({
+  sliderId: "slider",
+  containerId: "slideContainer",
+  dotsId: "dotsContainer",
+  nextBtnId: "nextBtn",
+  prevBtnId: "prevBtn"
 });
 
-// Init
-showSlide(0);
-startSlider();
+initSlider({
+  sliderId: "slider2",
+  containerId: "slideContainer2",
+  dotsId: "dotsContainer2",
+  nextBtnId: "nextBtn2",
+  prevBtnId: "prevBtn2"
+});
+
+//Dynamic Hero images
+  const images = [
+    '../../assets/images/keyboardpro.jpeg',
+    '../../assets/images/iamtrojanlogoresize.png',
+    '../../assets/images/Trojanlogo1.png',
+    '../../assets/images/trojanpic1.png',
+    '../../assets/images/trojanpic3.png'
+  ];
+
+  let current = 0;
+  const hero = document.querySelector('.hero-slideshow');
+
+  function changeSlide() {
+    hero.style.backgroundImage = `url('${images[current]}')`;
+    current = (current + 1) % images.length;
+  }
+
+  // Initial load
+  changeSlide();
+  setInterval(changeSlide, 6000); // Change every 5 seconds
+
+// Dark/Light Mode Toggle
+const body = document.body;
+  const toggle = document.getElementById("themeToggle");
+
+  toggle.addEventListener("click", () => {
+    body.classList.toggle("light-mode");
+    localStorage.setItem("theme", body.classList.contains("light-mode") ? "light" : "dark");
+  });
+
+  // Load theme preference
+  window.onload = () => {
+    const saved = localStorage.getItem("theme");
+    if (saved === "light") body.classList.add("light-mode");
+  };

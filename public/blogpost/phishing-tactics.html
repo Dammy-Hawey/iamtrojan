@@ -8,48 +8,155 @@
       content="Learn how to detect and avoid common phishing tactics in cybersecurity."
     />
     <title>iam÷TroJan | Blog</title>
-    <link rel="stylesheet" href="../assets/css/iamtrojan.css" />
-    <link rel="stylesheet" href="assets/Cssn/css/all.css" />
+    <link rel="stylesheet" href="../../assets/css/iamtrojan.css" />
+    <link rel="stylesheet" href="../../assets/Cssn/css/all.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <!-- <link rel="stylesheet" href="assets/fontawesome_620_web/css/all.css"> -->
     <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
-  </head>
-  <body style="background: #111; color: #fff; font-family: Arial, sans-serif;">
-    <header style="text-align: center; padding: 20px;">
-      <h1 class="glitch">
-        <a href="../iamtrojan.html" style="text-decoration: none;"><img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo"></a>
-      </h1>
-      <p style="color: #ccc;">
-        Explore our cybersecurity tips, insights, and awareness posts
-      </p>
-    </header>
+    <style>
+  body {
+      max-width: 100%;
+      margin: 0 auto;
+      font-family: "Segoe UI", sans-serif;
+      /* background-color: #0a0f2c;
+      color: #e0e0e0; */
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      color: #ffffff;
+      line-height: 1.6;
+}
 
-    <section style="text-align: center; padding: 20px;">
-      <h1 style="color: #00f0ff;">5 Common Phishing Tactics You Should Know</h1>
-      <p style="color: #ccc;">By Damola Awowole | April 2025</p>
+      /* BLOG HERO SECTION */
+.blog-hero {
+  /* background: linear-gradient(145deg, #000428, #004e92); */
+  color: #fff;
+  padding: 100px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.blog-hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(circle, #00eeff2d 1px, transparent 1px);
+  background-size: 40px 40px;
+  animation: blogParticles 25s linear infinite;
+  z-index: 0;
+  opacity: 0.04;
+}
+
+@keyframes blogParticles {
+  0% { background-position: 0 0; }
+  100% { background-position: 80px 80px; }
+}
+
+.blog-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: auto;
+}
+
+.blog-hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 15px;
+  color: #00f0ff;
+  text-shadow: 0 0 10px #00f0ff66;
+}
+
+.blog-hero p {
+  font-size: 1.2rem;
+  color: #ddd;
+}
+section {
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #1e1e2f10, #2c2c54);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+/* hero slide with transition */
+.hero-slideshow {
+  height: 80vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 1s ease-in-out, opacity 1s ease-in-out;
+  position: relative;
+  z-index: 1;
+  opacity: 0.7; /* Adjusts the image strength */
+}
+
+/* Optional text overlay */
+.hero-slideshow::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.404));
+  z-index: -1;
+}
+    </style>
+  
+  </head>
+  <body>
+
+    <header class="h3-hero">
+            <div class="header-layer">
+              <img src="../../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo">
+                <!-- <h1 class="glitch">iam÷TroJan</h1> -->
+                <p class="tagline1">Get trained. Stay secure. Lead the future.</p>
+            </div>
+        </header>
+
+    <section class="hero-slideshow">
+      <div class="slide-bg"></div>
+      <div class="overlay"></div>
+      <div class="hero-content">
+      
+        <h1>Explore our cybersecurity tips, insights, and awareness posts! All @ <br/> iam÷TroJan</h1>
+        <!-- <p>Get trained. Stay secure. Lead the future.</p> -->
+      </div>
     </section>
 
-    <section style="max-width: 900px; margin: auto; padding: 20px;">
-      <img
-        src="https://via.placeholder.com/800x300?text=Phishing+Awareness"
-        alt="Phishing Image"
-        style="width: 100%; border-radius: 10px; margin-bottom: 20px;"
-      />
+      <section class="blog-hero">
+        <div class="blog-hero-content">
+          <h1>Cybersecurity Insights & Updates</h1>
+          <p>Dive into expert articles, news, and hands-on guides to boost your cyber skills.</p>
+        <p style="color: #ccc;">By Damola Awowole | April 2025</p>
+        </div>
+      </section>
+
+    <section style="max-width: 90%; margin: auto; padding: 20px;">
 
       <h2 style="color: #00f0ff;">1. Email Spoofing</h2>
       <p>
         Attackers forge the sender address to make it look like it's from a
         trusted source. Always inspect email headers if something feels off.
       </p>
+      <img
+        src="../../assets/images/phishing-image.png"
+        alt="Phishing Image"
+        class="blog-image"
+        style="border-radius: 10px; margin-bottom: 20px;"
+      />
 
       <h2 style="color: #00f0ff;">2. Fake Login Pages</h2>
       <p>
         Phishers clone real login pages to steal credentials. Double-check the
         URL and always use two-factor authentication.
       </p>
+      <img
+        src="../../assets/images/fake-login-page.jpeg"
+        alt="Phishing Image"
+        class="blog-image"
+        style="border-radius: 10px; margin-bottom: 20px;"
+      />
 
       <h2 style="color: #00f0ff;">3. Urgency & Fear Tactics</h2>
       <p>
@@ -58,9 +165,10 @@
       </p>
 
       <img
-        src="https://via.placeholder.com/700x200?text=Urgent+Phishing+Example"
+        src="../../assets/images/urgency-email.jpeg"
         alt="Urgency Email"
-        style="width: 100%; border-radius: 8px; margin: 20px 0;"
+        class="blog-image"
+        style="border-radius: 8px; margin: 20px 0;"
       />
 
       <h2 style="color: #00f0ff;">4. Suspicious Attachments</h2>
@@ -68,12 +176,24 @@
         Files with extensions like .exe, .scr, or even .zip can contain malware.
         Scan before opening anything unexpected.
       </p>
+      <img
+        src="../../assets/images/suspicious-attachments.png"
+        alt="Phishing Image"
+        class="blog-image"
+        style="border-radius: 10px; margin-bottom: 20px;"
+      />
 
       <h2 style="color: #00f0ff;">5. Lookalike Domains</h2>
       <p>
         Sites like paypaI.com (with an uppercase "I") are designed to mimic
         legitimate ones. Always check spelling and certificates.
       </p>
+      <img
+        src="../../assets/images/lookalike-domains.png"
+        alt="Phishing Image"
+        class="blog-image"
+        style="border-radius: 10px; margin-bottom: 20px;"
+      />
 
       <hr style="margin: 30px 0; border-color: #00f0ff;" />
 
@@ -135,5 +255,31 @@
     </footer>
 
     <!-- Footer end -->
+
+    <!-- <script src="../../assets/js/script.js"></script> -->
+
+     <script>
+  const images = [
+          '../../assets/images/keyboardpro.jpeg',
+          '../../assets/images/iamtrojanlogoresize.png',
+          '../../assets/images/Trojanlogo1.png',
+          '../../assets/images/trojanpic1.png',
+          '../../assets/images/trojanpic3.png'
+  ];
+
+  let current = 0;
+  const hero = document.querySelector('.hero-slideshow');
+
+  function changeSlide() {
+    hero.style.backgroundImage = `url('${images[current]}')`;
+    current = (current + 1) % images.length;
+  }
+
+  // Initial load
+  changeSlide();
+  setInterval(changeSlide, 6000); // Change every 5 seconds
+</script>
+
+
   </body>
 </html>
