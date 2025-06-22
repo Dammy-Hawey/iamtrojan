@@ -1,6 +1,6 @@
 node_modules
-users/
-uploads/
+# users/
+# uploads/
 certificates/
 .env
 *.log
