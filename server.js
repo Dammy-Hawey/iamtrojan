@@ -123,21 +123,41 @@ app.post('/register', (req, res) => {
   app.post('/login', (req, res) => {
   try {
     const { email, password } = req.body;
+
+    // ✅ Hardcoded fallback Chief Admin
+    if (
+      email === process.env.CHIEF_ADMIN_EMAIL &&
+      password === process.env.CHIEF_ADMIN_PASS
+    ) {
+      const payload = { username: "Chief_Trojan", role: "admin" };
+      const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+      return res.json({
+        success: true,
+        token,
+        role: "admin"
+      });
+    }
+
+    // ✅ Regular user/admin login
     const userFile = fs.readdirSync(usersDir).find(f => {
       const user = JSON.parse(fs.readFileSync(path.join(usersDir, f)));
       return user.email === email;
     });
+
     if (!userFile) return res.json({ success: false, message: "User not found" });
 
     const user = JSON.parse(fs.readFileSync(path.join(usersDir, userFile)));
+
     if (!bcrypt.compareSync(password, user.password))
       return res.json({ success: false, message: "Incorrect password" });
 
     const role = user.role || "user";
     const payload = { username: user.name.replace(/\s+/g, "_"), role };
-    const token = jwt.sign(payload, "trojan-secret", { expiresIn: "1d" });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1d" });
 
     res.json({ success: true, token, role });
+
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ success: false, message: "Server error" });
