@@ -41,6 +41,14 @@ menuLinks.forEach(link => {
 
 //glowing button ends
 
+// This for nav menu
+const menuToggle = document.getElementById("menuToggle");
+  const navLinks = document.getElementById("navLinks");
+
+  menuToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+  });
+
 // Auto & Manual Slide Carousel
 // Utility function to init any slider by ID group
 function initSlider(config) {

@@ -12,24 +12,42 @@
 </head>
 <body>
     <div class="main-body">
-      <nav>
-                <a class="glow-menu" href="#">Home</a>
-                <a class="glow-menu" href="#about">About</a>
-                <a class="glow-menu" href="#modules">Modules</a>
-                <a class="glow-menu" href="#resources">Combo</a>
-                <a class="glow-menu" href="#contact">Contact</a>
-                <a class="glow-menu" href="iamtrojanlogin.html">Login</a>
-                <a class="glow-menu" href="iamtrojanReg.html">Sign-Up</a>
-                <button id="themeToggle" class="glow-menu">Toggle Theme</button>
+
+              <nav class="main-nav">
+              <div class="logo">
+                <img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo">
+                <p style="font-size: 8px;">Get trained. Stay secure. Lead the future.</p>
+              </div>
+
+              <!-- Theme Toggle Button -->
+              <button id="themeToggle" class="theme-toggle" title="Toggle Theme">
+                <i class="fas fa-adjust"></i>
+              </button>
+
+              <!-- Hamburger Icon (only visible on mobile) -->
+              <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+              </button>
+
+              <!-- Nav Links -->
+              <ul class="nav-links" id="navLinks">
+                <li><a class="glow-menu-ine" href="#">Home</a></li>
+                <li><a class="glow-menu-ine" href="#about">About</a></li>
+                <li><a class="glow-menu-ine" href="#modules">Modules</a></li>
+                <li><a class="glow-menu-ine" href="#resources">Combo</a></li>
+                <li><a class="glow-menu-ine" href="#contact">Contact</a></li>
+                <li><a class="glow-menu-ine" href="iamtrojanlogin.html">Login</a></li>
+                <li><a class="glow-menu-ine" href="iamtrojanReg.html">Sign-Up</a></li>
+              </ul>
             </nav>
 
-        <header class="h3-hero">
+        <!-- <header class="h3-hero">
             <div class="header-layer">
               <img src="../assets/images/iamtrojanlogoresize.png" class="glitch11" alt=" iam÷TroJan-Logo">
-                <!-- <h1 class="glitch">iam÷TroJan</h1> -->
+                <!- <h1 class="glitch">iam÷TroJan</h1> ->
                 <p class="tagline1">Get trained. Stay secure. Lead the future.</p>
             </div>
-        </header>
+        </header> -->
 
         <section class="hero-slideshow">
       <div class="slide-bg"></div>
@@ -98,7 +116,7 @@
                 <h3>Advanced</h3>
                 <p>
                     <ul>
-                        <li>Learn how to identify & mitigate zero-day vulnerabilities.</li>
+                        <li>Learn how to identify & mitigate zero-day attacks.</li>
                         <li>Practice ethical hacking skills responsibly.</li>
                         <li>Monitor network traffic and logs.</li>
                     </ul>
@@ -249,7 +267,7 @@
         </section>
 
         <section class="contact" id="contact">
-            <h2 style="text-align:center;">Contact</h2>
+            <h2>Contact</h2>
             <p style="text-align: center;">Have suggestions or questions?<br/> Reach out via social media or email us @ </p>
 
             <!--Footer Start-->
