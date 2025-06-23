@@ -170,3 +170,33 @@ const body = document.body;
     const saved = localStorage.getItem("theme");
     if (saved === "light") body.classList.add("light-mode");
   };
+
+  // Trigger modal only once using localStorage
+  // const modalShown = localStorage.getItem("feedbackGiven");
+
+  // if (!modalShown) {
+  //   window.addEventListener("beforeunload", function (e) {
+  //     e.preventDefault();
+  //     document.getElementById("feedbackModal").style.display = "flex";
+  //     localStorage.setItem("feedbackGiven", "true");
+  //     return (e.returnValue = ""); // Required for Chrome
+  //   });
+  // }
+
+  // ================= Feedback Modal Trigger ===================
+(function () {
+  const modalShown = localStorage.getItem("feedbackGiven");
+
+  if (!modalShown) {
+    window.addEventListener("beforeunload", function (e) {
+      const modal = document.getElementById("feedbackModal");
+      if (modal) {
+        e.preventDefault(); // Cancel the event
+        modal.style.display = "flex"; // Show modal
+        localStorage.setItem("feedbackGiven", "true");
+        e.returnValue = ""; // For Chrome compatibility
+        return ""; // For legacy support
+      }
+    });
+  }
+})();

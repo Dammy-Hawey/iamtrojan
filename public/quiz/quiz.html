@@ -89,8 +89,22 @@
 
     const urlParams = new URLSearchParams(window.location.search);
     const selectedLevel = urlParams.get("level") || "beginner";
+
+    // 🔒 Access control for level progression
+    if (selectedLevel === "intermediate" && !localStorage.getItem("beginnerCompleted")) {
+      alert("⚠️ You must complete the Beginner level first!");
+      window.location.href = "quiz.html?level=beginner";
+      return;
+    }
+    if (selectedLevel === "advanced" && !localStorage.getItem("intermediateCompleted")) {
+      alert("⚠️ You must complete the Intermediate level first!");
+      window.location.href = "quiz.html?level=intermediate";
+      return;
+    }
+
     const questions = allCyberQuestions[selectedLevel] || [];
 
+    // Render questions
     questions.forEach((q, i) => {
       const div = document.createElement("div");
       div.className = "question";
@@ -108,16 +122,25 @@
 
     form.onsubmit = async function (e) {
       e.preventDefault();
-      let score = 0;
+      let correct = 0, wrong = 0;
 
       questions.forEach((q, i) => {
         const selected = form.querySelector(`input[name="q${i}"]:checked`);
-        if (selected && selected.value === q.answer) score++;
+        if (selected && selected.value === q.answer) {
+          correct++;
+        } else {
+          wrong++;
+        }
       });
 
-      result.innerHTML = `🎉 You scored <strong>${score}</strong> out of <strong>${questions.length}</strong>!`;
+      result.innerHTML = `
+        <p>🎯 <strong>${selectedLevel.toUpperCase()}</strong> Quiz Result</p>
+        ✅ Correct: <strong>${correct}</strong><br/>
+        ❌ Wrong: <strong>${wrong}</strong><br/>
+        📊 Total Questions: <strong>${questions.length}</strong>
+      `;
 
-      if (score >= 7) {
+      if (correct >= 10) {
         const fullName = prompt("Enter your full name for the certificate:") || "Cyber Warrior";
         const certId = "TJN-" + Math.floor(100000 + Math.random() * 900000);
         const date = new Date().toLocaleDateString();
@@ -127,10 +150,13 @@
         fetch("/save-certificate", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: fullName, score, certId, date, level: selectedLevel })
+          body: JSON.stringify({ name: fullName, score: correct, certId, date, level: selectedLevel })
         });
+
+        // ✅ Store completion status in localStorage
+        localStorage.setItem(`${selectedLevel}Completed`, "true");
       } else {
-        previewContainer.innerHTML = `<p style="color: red;">❌ Score at least 7 to get a certificate.</p>`;
+        previewContainer.innerHTML = `<p style="color: red;">❌ You need at least 10 correct answers to earn a certificate.</p>`;
       }
     };
   };
