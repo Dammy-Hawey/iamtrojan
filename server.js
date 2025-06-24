@@ -10,7 +10,7 @@ const path = require('path');
 const { PDFDocument, rgb } = require('pdf-lib');
 
 const User = require('./models/user');
-const Certificate = require('./models/Certificate');
+const Certificate = require('./models/certificate');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
