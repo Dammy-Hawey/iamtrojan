@@ -9,6 +9,16 @@ const fs = require('fs');
 const path = require('path');
 const { PDFDocument, rgb } = require('pdf-lib');
 
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => {
+  console.log('✅ Connected to MongoDB');
+}).catch(err => {
+  console.error('❌ MongoDB connection error:', err);
+});
+
+
 const User = require('./models/user');
 const Certificate = require('./models/certificate');
 
@@ -44,6 +54,12 @@ const lessons = [
 ];
 
 app.get('/', (req, res) => res.redirect('/iamtrojan.html'));
+
+//chek-point for the website health
+app.get('/health', (req, res) => {
+  res.status(200).send('Server is healthy 🚀');
+});
+
 
 // ✅ Multer for profile image upload
 const storage = multer.diskStorage({
