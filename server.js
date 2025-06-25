@@ -75,6 +75,7 @@ const upload = multer({ storage });
 
 // ✅ Registration
 app.post('/register', async (req, res) => {
+  console.log("📥 Received registration:", req.body); // Add this line
   try {
     const { name, email, password, message, securityQuestion, securityAnswer, accessCode } = req.body;
     const role = accessCode === 'TROJAN-ADMIN-2025' ? 'admin' : 'user';
