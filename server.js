@@ -145,6 +145,31 @@ function authenticate(req, res, next) {
   }
 }
 
+app.post('/reset-password', async (req, res) => {
+  try {
+    const { email, answer, newPassword } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ success: false, message: "User not found." });
+
+    // Check if answer matches
+    if (user.securityAnswer.toLowerCase() !== answer.toLowerCase()) {
+      return res.status(401).json({ success: false, message: "Incorrect security answer." });
+    }
+
+    // Hash new password and save
+    const hashed = await bcrypt.hash(newPassword, 10);
+    user.password = hashed;
+    await user.save();
+
+    res.json({ success: true, message: "✅ Password reset successful!" });
+  } catch (err) {
+    console.error("Reset error:", err);
+    res.status(500).json({ success: false, message: "Something went wrong." });
+  }
+});
+
+
 // ✅ Get profile
 app.get('/me', authenticate, async (req, res) => {
   const username = req.user.username.replace(/_/g, ' ');
