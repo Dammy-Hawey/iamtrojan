@@ -1,10 +1,10 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  service: 'gmail', // For now, using Gmail. Change this for SendGrid/Mailgun later
+  service: 'gmail', // Using Gmail for free email delivery
   auth: {
     user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    pass: process.env.EMAIL_PASS,
   }
 });
 
@@ -48,7 +48,7 @@ const sendWelcomeEmail = async (toEmail, name) => {
     `
   };
 
-  await transporter.sendMail(mailOptions);
+  return transporter.sendMail(mailOptions);
 };
 
 module.exports = sendWelcomeEmail;
