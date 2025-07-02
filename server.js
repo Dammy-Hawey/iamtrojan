@@ -63,26 +63,52 @@ const upload = multer({ storage });
 
 // ✅ Register
 app.post('/register', async (req, res) => {
+  console.log("📥 Received registration:", req.body);
   try {
     const { name, email, password, message, securityQuestion, securityAnswer, accessCode } = req.body;
+    const role = accessCode === 'TROJAN-ADMIN-2025' ? 'admin' : 'user';
+    const hashedPassword = await bcrypt.hash(password, 10);
+
     const existing = await User.findOne({ email });
     if (existing) return res.send("User already exists.");
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const role = accessCode === 'TROJAN-ADMIN-2025' ? 'admin' : 'user';
-
     const newUser = new User({
-      name, email, message, securityQuestion, securityAnswer,
-      password: hashedPassword, role
+      name, email, password: hashedPassword, message,
+      role, securityQuestion, securityAnswer
     });
-
     await newUser.save();
-    res.send(`<h2 style="color:#00f0ff;">Thanks for registering!</h2><a href="/">Go Back</a>`);
+
+    // ✅ Send welcome email
+    await sendWelcomeEmail(email, name);
+
+    res.send('<h2 style="color:#00f0ff;">Thanks for registering! A confirmation email has been sent to your inbox.</h2><a href="/">Go Back</a>');
   } catch (err) {
-    console.error(err);
+    console.error("❌ Registration error:", err);
     res.status(500).send("Registration failed");
   }
 });
+
+// app.post('/register', async (req, res) => {
+//   try {
+//     const { name, email, password, message, securityQuestion, securityAnswer, accessCode } = req.body;
+//     const existing = await User.findOne({ email });
+//     if (existing) return res.send("User already exists.");
+
+//     const hashedPassword = await bcrypt.hash(password, 10);
+//     const role = accessCode === 'TROJAN-ADMIN-2025' ? 'admin' : 'user';
+
+//     const newUser = new User({
+//       name, email, message, securityQuestion, securityAnswer,
+//       password: hashedPassword, role
+//     });
+
+//     await newUser.save();
+//     res.send(`<h2 style="color:#00f0ff;">Thanks for registering!</h2><a href="/">Go Back</a>`);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Registration failed");
+//   }
+// });
 
 // ✅ Login
 app.post('/login', async (req, res) => {
