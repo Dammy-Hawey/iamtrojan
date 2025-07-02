@@ -9,6 +9,8 @@ const fs = require('fs');
 const path = require('path');
 const { PDFDocument, rgb } = require('pdf-lib');
 
+const sendWelcomeEmail = require('./mailer');
+
 // Models
 const User = require('./models/user');
 const Certificate = require('./models/certificate');
