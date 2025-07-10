@@ -12,6 +12,7 @@ const { PDFDocument, rgb } = require('pdf-lib');
 const sendWelcomeEmail = require('./mailer');
 
 // Models
+const DeletionLog = require('./models/deletionLog'); // Top of your server.js
 const User = require('./models/user');
 const Certificate = require('./models/certificate');
 
@@ -90,28 +91,6 @@ app.post('/register', async (req, res) => {
   }
 });
 
-// app.post('/register', async (req, res) => {
-//   try {
-//     const { name, email, password, message, securityQuestion, securityAnswer, accessCode } = req.body;
-//     const existing = await User.findOne({ email });
-//     if (existing) return res.send("User already exists.");
-
-//     const hashedPassword = await bcrypt.hash(password, 10);
-//     const role = accessCode === 'TROJAN-ADMIN-2025' ? 'admin' : 'user';
-
-//     const newUser = new User({
-//       name, email, message, securityQuestion, securityAnswer,
-//       password: hashedPassword, role
-//     });
-
-//     await newUser.save();
-//     res.send(`<h2 style="color:#00f0ff;">Thanks for registering!</h2><a href="/">Go Back</a>`);
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Registration failed");
-//   }
-// });
-
 // ✅ Login
 app.post('/login', async (req, res) => {
   const { email, password } = req.body;
@@ -144,31 +123,6 @@ function authenticate(req, res, next) {
     res.status(403).json({ message: "Invalid or expired token" });
   }
 }
-
-//app.post('/reset-password', async (req, res) => {
-   //console.log("📨 Password reset request:", req.body);  // <== Add this
- // try {
-  //  const { email, answer, newPassword } = req.body;
-
- //   const user = await User.findOne({ email });
-  //  if (!user) return res.status(404).json({ success: false, message: "User not found." });
-
-    // Check if answer matches
-   // if (user.securityAnswer.toLowerCase() !== answer.toLowerCase()) {
-  //   return res.status(401).json({ success: false, message: "Incorrect security answer." });
-  //  }
-
-    // Hash new password and save
-   // const hashed = await bcrypt.hash(newPassword, 10);
-   // user.password = hashed;
-   // await user.save();
-
-   // res.json({ success: true, message: "✅ Password reset successful!" });
- // } catch (err) {
-   // console.error("Reset error:", err);
-  //  res.status(500).json({ success: false, message: "Something went wrong." });
-//  }
-//});
 
 //New reset-password route 
 app.post('/reset-password', async (req, res) => {
@@ -335,6 +289,62 @@ app.post('/admin/change-role', authenticate, async (req, res) => {
 
   res.json({ success: true, message: "Role updated" });
 });
+
+//Account deletion
+app.post('/admin/delete-user', async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "Unauthorized" });
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role !== "admin") return res.status(403).json({ message: "Admins only" });
+
+    const { email, reason } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    if (user.deletedAt) return res.status(400).json({ message: "User already deleted" });
+
+    user.deletedAt = new Date();
+    await user.save();
+
+    // Optional: log deletion
+    await DeletionLog.create({
+      deletedUserEmail: email,
+      deletedBy: decoded.username,
+      reason
+    });
+
+    res.json({ success: true, message: "User soft-deleted" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Deletion failed" });
+  }
+});
+
+//Restore user
+app.post('/admin/restore-user', async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  const { email } = req.body;
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET);
+    if (decoded.role !== "admin") return res.status(403).json({ message: "Admins only" });
+
+    const user = await User.findOne({ email });
+    if (!user || !user.deletedAt) return res.status(404).json({ message: "User not found or not deleted" });
+
+    user.deletedAt = null;
+    await user.save();
+
+    res.json({ success: true, message: "User restored successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Restoration failed" });
+  }
+});
+
 
 // ✅ Broadcast (admin)
 app.post('/admin/broadcast', authenticate, (req, res) => {
