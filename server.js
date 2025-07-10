@@ -146,6 +146,7 @@ function authenticate(req, res, next) {
 }
 
 app.post('/reset-password', async (req, res) => {
+   console.log("📨 Password reset request:", req.body);  // <== Add this
   try {
     const { email, answer, newPassword } = req.body;
 
