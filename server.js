@@ -145,31 +145,66 @@ function authenticate(req, res, next) {
   }
 }
 
+//app.post('/reset-password', async (req, res) => {
+   //console.log("📨 Password reset request:", req.body);  // <== Add this
+ // try {
+  //  const { email, answer, newPassword } = req.body;
+
+ //   const user = await User.findOne({ email });
+  //  if (!user) return res.status(404).json({ success: false, message: "User not found." });
+
+    // Check if answer matches
+   // if (user.securityAnswer.toLowerCase() !== answer.toLowerCase()) {
+  //   return res.status(401).json({ success: false, message: "Incorrect security answer." });
+  //  }
+
+    // Hash new password and save
+   // const hashed = await bcrypt.hash(newPassword, 10);
+   // user.password = hashed;
+   // await user.save();
+
+   // res.json({ success: true, message: "✅ Password reset successful!" });
+ // } catch (err) {
+   // console.error("Reset error:", err);
+  //  res.status(500).json({ success: false, message: "Something went wrong." });
+//  }
+//});
+
+//New reset-password route 
 app.post('/reset-password', async (req, res) => {
-   console.log("📨 Password reset request:", req.body);  // <== Add this
   try {
-    const { email, answer, newPassword } = req.body;
+    const { email, securityAnswer, newPassword } = req.body;
+
+    console.log("📨 Reset request:", req.body);
+
+    if (!email || !securityAnswer || !newPassword) {
+      return res.status(400).json({ success: false, message: "All fields are required." });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ success: false, message: "Password too short." });
+    }
 
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ success: false, message: "User not found." });
 
-    // Check if answer matches
-    if (user.securityAnswer.toLowerCase() !== answer.toLowerCase()) {
+    if (!user.securityAnswer) {
+      return res.status(400).json({ success: false, message: "Security answer not set for this account." });
+    }
+
+    if (user.securityAnswer.toLowerCase() !== securityAnswer.toLowerCase()) {
       return res.status(401).json({ success: false, message: "Incorrect security answer." });
     }
 
-    // Hash new password and save
-    const hashed = await bcrypt.hash(newPassword, 10);
-    user.password = hashed;
+    user.password = await bcrypt.hash(newPassword, 10);
     await user.save();
 
     res.json({ success: true, message: "✅ Password reset successful!" });
   } catch (err) {
-    console.error("Reset error:", err);
+    console.error("❌ Reset error:", err);
     res.status(500).json({ success: false, message: "Something went wrong." });
   }
 });
-
 
 // ✅ Get profile
 app.get('/me', authenticate, async (req, res) => {
