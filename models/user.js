@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   role: { type: String, default: "user" },
   progress: { type: Number, default: 0 },
   completedLessons: [String],
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
   deletedAt: { type: Date, default: null }
 
 });
