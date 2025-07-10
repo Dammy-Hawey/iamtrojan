@@ -129,6 +129,29 @@
     <textarea id="broadcastMessage" rows="5" placeholder="Write your announcement here..."></textarea>
     <button onclick="broadcast()">Send Message</button>
   </div>
+  <label for="userSearch">Search User:</label>
+<input
+  type="text"
+  id="userSearch"
+  placeholder="Search by name or email"
+  onkeyup="filterUsers()"
+  style="width:100%; padding:10px; margin-bottom:15px;"
+/>
+
+<section id="admin-user-management" style="max-width:600px; margin:30px auto; background:#0d1117; padding:30px; border-radius:8px; box-shadow:0 0 15px #00f0ff;">
+  <h2 style="color:#00f0ff; text-align:center;">User Management</h2>
+
+  <label for="userSelect">Select User:</label>
+  <select id="userSelect" style="width:100%; padding:10px; margin-bottom:15px;"></select>
+
+  <label for="reason">Reason (for delete):</label>
+  <input type="text" id="reason" placeholder="Enter reason" style="width:100%; padding:10px; margin-bottom:15px;" />
+
+  <button onclick="deleteUser()" style="background:red; color:white; padding:10px 20px; border:none; border-radius:4px; margin-right:10px;">Delete User</button>
+  <button onclick="restoreUser()" style="background:green; color:white; padding:10px 20px; border:none; border-radius:4px;">Restore User</button>
+
+  <p id="adminActionMsg" style="margin-top:20px; color:#ccc;"></p>
+</section>
 
   <!-- All Users -->
   <div class="section">
@@ -246,6 +269,98 @@
   }
 
   loadAllUsers();
+</script>
+
+<!-- For DELETE AND RESTORE -->
+<script>
+const token = localStorage.getItem('token'); // You should already be saving this on login
+
+// Load users
+async function loadUsers() {
+  const res = await fetch("/all-users", {
+    headers: { Authorization: "Bearer " + token }
+  });
+  const users = await res.json();
+
+  const userSelect = document.getElementById("userSelect");
+  userSelect.innerHTML = "";
+  users.forEach(user => {
+    const option = document.createElement("option");
+    option.value = user.email;
+    option.text = `${user.name} (${user.email})`;
+    userSelect.appendChild(option);
+  });
+}
+
+// Delete user
+async function deleteUser() {
+  const email = document.getElementById("userSelect").value;
+  const reason = document.getElementById("reason").value;
+
+  const res = await fetch("/admin/delete-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    },
+    body: JSON.stringify({ email, reason })
+  });
+
+  const result = await res.json();
+  document.getElementById("adminActionMsg").innerText = result.message;
+  loadUsers(); // Refresh list
+}
+
+// Restore user
+async function restoreUser() {
+  const email = document.getElementById("userSelect").value;
+
+  const res = await fetch("/admin/restore-user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    },
+    body: JSON.stringify({ email })
+  });
+
+  const result = await res.json();
+  document.getElementById("adminActionMsg").innerText = result.message;
+  loadUsers(); // Refresh list
+}
+
+// Initial load
+loadUsers();
+let allUsers = []; // store all users globally
+
+async function loadUsers() {
+  const res = await fetch("/all-users", {
+    headers: { Authorization: "Bearer " + token }
+  });
+  allUsers = await res.json(); // Store users
+  populateUserDropdown(allUsers); // Initial full load
+}
+
+function populateUserDropdown(users) {
+  const userSelect = document.getElementById("userSelect");
+  userSelect.innerHTML = "";
+  users.forEach(user => {
+    const option = document.createElement("option");
+    option.value = user.email;
+    option.text = `${user.name} (${user.email})`;
+    userSelect.appendChild(option);
+  });
+}
+
+function filterUsers() {
+  const keyword = document.getElementById("userSearch").value.toLowerCase();
+  const filtered = allUsers.filter(user =>
+    user.name.toLowerCase().includes(keyword) ||
+    user.email.toLowerCase().includes(keyword)
+  );
+  populateUserDropdown(filtered);
+}
+
 </script>
 
 </body>
