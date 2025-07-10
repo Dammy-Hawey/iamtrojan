@@ -100,7 +100,7 @@ app.post('/login', async (req, res) => {
     return res.json({ success: true, token, role: 'admin' });
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, deletedAt: null });
   if (!user) return res.json({ success: false, message: "User not found" });
 
   const valid = await bcrypt.compare(password, user.password);
@@ -139,7 +139,7 @@ app.post('/reset-password', async (req, res) => {
       return res.status(400).json({ success: false, message: "Password too short." });
     }
 
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email, deletedAt: null });
     if (!user) return res.status(404).json({ success: false, message: "User not found." });
 
     if (!user.securityAnswer) {
@@ -163,7 +163,7 @@ app.post('/reset-password', async (req, res) => {
 // ✅ Get profile
 app.get('/me', authenticate, async (req, res) => {
   const username = req.user.username.replace(/_/g, ' ');
-  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i') });
+  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i'), deletedAt: null });
   if (!user) return res.status(404).json({ message: "User not found" });
 
   res.json({ name: user.name, email: user.email, progress: user.progress, interests: user.interests });
@@ -175,10 +175,10 @@ app.post('/update-profile', authenticate, async (req, res) => {
   const username = req.user.username.replace(/_/g, ' ');
 
   const user = await User.findOneAndUpdate(
-    { name: new RegExp(`^${username}$`, 'i') },
-    { name, email, interests, progress },
-    { new: true }
-  );
+  { name: new RegExp(`^${username}$`, 'i'), deletedAt: null },
+  { name, email, interests, progress },
+  { new: true }
+);
 
   if (!user) return res.status(404).json({ message: "User not found" });
   res.json({ message: "Profile updated" });
@@ -187,7 +187,7 @@ app.post('/update-profile', authenticate, async (req, res) => {
 // ✅ Get lessons
 app.get('/courses', authenticate, async (req, res) => {
   const username = req.user.username.replace(/_/g, ' ');
-  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i') });
+  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i'), deletedAt: null });
   if (!user) return res.status(404).json({ message: "User not found" });
 
   res.json({ lessons, completed: user.completedLessons || [] });
@@ -197,7 +197,7 @@ app.get('/courses', authenticate, async (req, res) => {
 app.post('/mark-complete', authenticate, async (req, res) => {
   const { lessonId } = req.body;
   const username = req.user.username.replace(/_/g, ' ');
-  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i') });
+  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i'), deletedAt: null });
 
   if (!user) return res.status(404).json({ success: false, message: "User not found" });
 
@@ -212,7 +212,7 @@ app.post('/mark-complete', authenticate, async (req, res) => {
 // ✅ Progress increase
 app.post('/increase-progress', authenticate, async (req, res) => {
   const username = req.user.username.replace(/_/g, ' ');
-  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i') });
+  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i'), deletedAt: null });
 
   if (!user) return res.status(404).json({ message: "User not found" });
   user.progress = Math.min((user.progress || 0) + 1, 10);
@@ -223,7 +223,7 @@ app.post('/increase-progress', authenticate, async (req, res) => {
 // ✅ Upload photo
 app.post('/upload-photo', authenticate, upload.single('photo'), async (req, res) => {
   const username = req.user.username.replace(/_/g, ' ');
-  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i') });
+  const user = await User.findOne({ name: new RegExp(`^${username}$`, 'i'), deletedAt: null });
 
   if (!user) return res.status(404).send("User not found");
   user.profileImage = `/uploads/${req.file.filename}`;
@@ -262,7 +262,7 @@ app.post('/save-certificate', async (req, res) => {
 // ✅ Get all users (admin)
 app.get('/all-users', authenticate, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).json({ message: "Forbidden" });
-  const users = await User.find({}, "-password");
+  const users = await User.find({ deletedAt: null }, "-password");
   res.json(users);
 });
 
@@ -271,7 +271,7 @@ app.post('/admin/reset-password', authenticate, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).json({ message: "Forbidden" });
 
   const { email, newPassword } = req.body;
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email, deletedAt: null });
   if (!user) return res.status(404).json({ message: "User not found" });
 
   user.password = await bcrypt.hash(newPassword, 10);
@@ -284,7 +284,11 @@ app.post('/admin/change-role', authenticate, async (req, res) => {
   if (req.user.role !== "admin") return res.status(403).json({ message: "Forbidden" });
 
   const { email, role } = req.body;
-  const user = await User.findOneAndUpdate({ email }, { role }, { new: true });
+  const user = await User.findOneAndUpdate(
+  { email, deletedAt: null },
+  { role },
+  { new: true }
+);
   if (!user) return res.status(404).json({ message: "User not found" });
 
   res.json({ success: true, message: "Role updated" });
