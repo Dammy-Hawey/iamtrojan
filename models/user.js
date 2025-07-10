@@ -12,6 +12,8 @@ const userSchema = new mongoose.Schema({
   progress: { type: Number, default: 0 },
   completedLessons: [String],
   createdAt: { type: Date, default: Date.now }
+  deletedAt: { type: Date, default: null }
+
 });
 
 module.exports = mongoose.model("User", userSchema);
