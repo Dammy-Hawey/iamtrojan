@@ -129,7 +129,8 @@
         // Try to load logo
         try {
             const logoImg = await loadImage("../../assets/images/iamtrojanlogoresize.png");
-            doc.addImage(logo, "PNG", (pageWidth - 100) / 2.5, 30, 250, 87.5);
+            // doc.addImage(logo, "PNG", (pageWidth - 100) / 2.5, 30, 250, 87.5);
+            doc.addImage(logoImg, "PNG", (pageWidth - 100) / 2.5, 30, 250, 87.5);
         } catch (err) {
             console.warn("Logo not loaded:", err.message);
         }
