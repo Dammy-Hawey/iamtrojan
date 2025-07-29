@@ -237,11 +237,44 @@ app.post('/upload-photo', authenticate, upload.single('photo'), async (req, res)
 });
 
 // ✅ Save certificate
-app.post('/save-certificate', async (req, res) => {
+// app.post('/save-certificate', async (req, res) => {
+//   try {
+//     const { name, score, certId, date, level } = req.body;
+//     const cert = new Certificate({ name, score, certId, date, level });
+//     await cert.save();
+
+//     const templateBytes = fs.readFileSync("./certs/template.pdf");
+//     const pdfDoc = await PDFDocument.load(templateBytes);
+//     const page = pdfDoc.getPages()[0];
+//     page.drawText(name, { x: 200, y: 300, size: 24, color: rgb(0, 0.53, 0.71) });
+//     page.drawText(`Certificate ID: ${certId}`, { x: 200, y: 270, size: 14, color: rgb(0.4, 0.4, 0.4) });
+
+//     const pdfBytes = await pdfDoc.save();
+//     fs.writeFileSync(path.join(PDFS_DIR, `${certId}.pdf`), pdfBytes);
+
+//     res.json({ success: true, message: "Certificate saved and PDF created" });
+//   } catch (err) {
+//     // console.error(err);
+//     console.error("Error saving certificate:", err);
+//     res.status(500).json({ message: "Certificate generation failed" });
+//   }
+// });
+
+app.post("/save-certificate", async (req, res) => {
   try {
     const { name, score, certId, date, level } = req.body;
-    const cert = new Certificate({ name, score, certId, date, level });
-    await cert.save();
+
+    if (!name || !score || !certId || !date || !level) {
+      return res.status(400).json({ message: "All fields are required." });
+    }
+
+    const exists = await Certificate.findOne({ certId });
+    if (exists) {
+      return res.status(409).json({ message: "Certificate already exists." });
+    }
+
+    const newCert = new Certificate({ name, score, certId, date, level });
+    await newCert.save();
 
     const templateBytes = fs.readFileSync("./certs/template.pdf");
     const pdfDoc = await PDFDocument.load(templateBytes);
@@ -252,12 +285,13 @@ app.post('/save-certificate', async (req, res) => {
     const pdfBytes = await pdfDoc.save();
     fs.writeFileSync(path.join(PDFS_DIR, `${certId}.pdf`), pdfBytes);
 
-    res.json({ success: true, message: "Certificate saved and PDF created" });
+    res.json({ success: true, message: "Certificate saved successfully." });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Certificate generation failed" });
+    console.error("Save Cert Error:", err.message);
+    res.status(500).json({ message: "Failed to save certificate." });
   }
 });
+
 
 // ✅ Get all users (admin)
 app.get('/all-users', authenticate, async (req, res) => {
@@ -370,6 +404,18 @@ app.get("/certificate/:certId", (req, res) => {
   res.contentType("application/pdf");
   fs.createReadStream(filePath).pipe(res);
 });
+
+//✅ Get All Certificates
+app.get("/get-certificates", async (req, res) => {
+  try {
+    const certs = await Certificate.find().sort({ date: -1 });
+    res.json(certs);
+  } catch (err) {
+    console.error("Get Cert Error:", err.message);
+    res.status(500).json({ message: "Failed to fetch certificates." });
+  }
+});
+
 
 // ✅ Start server
 app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));
