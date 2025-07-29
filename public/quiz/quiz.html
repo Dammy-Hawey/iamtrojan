@@ -147,11 +147,39 @@
 
         await generateCertificate(fullName, certId, date, selectedLevel, true);
 
-        fetch("/save-certificate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name: fullName, score: correct, certId, date, level: selectedLevel })
-        });
+        // fetch("/save-certificate", {
+        //   method: "POST",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify({ name: fullName, score: correct, certId, date, level: selectedLevel })
+        // });
+        try {
+  const saveRes = await fetch("/save-certificate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: fullName,
+      score: correct,
+      certId,
+      date,
+      level: selectedLevel
+    })
+  });
+
+  const saveResult = await saveRes.json();
+  if (saveResult.success) {
+    console.log("✅ Certificate saved successfully.");
+    
+    // ✅ VISUAL CONFIRMATION TO USER (PLACE THIS HERE)
+    previewContainer.innerHTML += `<p style="color: #0f0; margin-top: 15px;">✅ Certificate saved successfully!</p>`;
+      } else {
+        console.error("⚠️ Failed to save certificate:", saveResult.message);
+        alert("Warning: Your certificate was not saved to the server.");
+      }
+    } catch (err) {
+      console.error("❌ Error saving certificate:", err);
+      alert("Error: Could not save your certificate. Please try again later.");
+    }
+
 
         // ✅ Store completion status in localStorage
         localStorage.setItem(`${selectedLevel}Completed`, "true");
