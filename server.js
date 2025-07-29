@@ -265,7 +265,8 @@ app.post("/save-certificate", async (req, res) => {
     const { name, score, certId, date, level } = req.body;
 
     if (!name || !score || !certId || !date || !level) {
-      return res.status(400).json({ message: "All fields are required." });
+      // return res.status(400).json({ message: "All fields are required." });
+      return res.status(400).json({ success: false, message: "Missing required fields" });
     }
 
     const exists = await Certificate.findOne({ certId });
